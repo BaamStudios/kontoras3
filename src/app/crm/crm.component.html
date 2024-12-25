@@ -63,7 +63,7 @@
           </clr-tooltip-content>
         </clr-tooltip>
       </clr-dg-cell>
-      <clr-dg-cell *ngIf="featureFlags.showTypeColumn">{{ customer.customerType }}</clr-dg-cell>
+      <clr-dg-cell *ngIf="featureFlags.showTypeColumn">{{ customer.customerType.toLowerCase() | translate }}</clr-dg-cell>
       <clr-dg-cell *ngIf="featureFlags.showNameColumn">{{ customer.displayName }}</clr-dg-cell>
       <clr-dg-cell *ngIf="featureFlags.showCreatedAtColumn">{{ customer.createdAt | date : "short" }} Uhr</clr-dg-cell>
       <clr-dg-cell *ngIf="featureFlags.showUpdatedAtColumn">{{ customer.updatedAt | date : "short" }} Uhr</clr-dg-cell>
