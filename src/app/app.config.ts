@@ -21,7 +21,7 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(),
     {
       provide: APP_INITIALIZER,
-      useFactory: (authService: AuthService) => () => authService.checkUser(),
+      useFactory: (authService: AuthService) => (authService.checkUser()),
       deps: [AuthService],
       multi: true,
     },
