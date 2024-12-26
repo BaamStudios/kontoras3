@@ -46,11 +46,11 @@
         </tr>
         <tr *ngIf="featureFlags.personView.showCreatedAt">
           <th>{{ 'createdAt' | translate }}</th>
-          <td>{{ entity.createdAt | date : 'short' }} Uhr</td>
+          <td>{{ entity.createdAt | date : 'medium' }} Uhr</td>
         </tr>
         <tr *ngIf="featureFlags.personView.showBirthdate">
           <th>{{ 'birthdate' | translate }}</th>
-          <td>{{ entity.birthdate | date : 'shortDate' }}</td>
+          <td>{{ entity.birthdate | date : 'mediumDate' }}</td>
         </tr>
       </tbody>
     </table>
