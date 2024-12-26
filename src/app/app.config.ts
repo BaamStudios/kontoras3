@@ -9,7 +9,11 @@ import { TranslateModule, TranslateLoader, TranslateService } from '@ngx-transla
 import { HttpLoaderFactory } from './app.translate-loader';
 
 export function initializeTranslations(translate: TranslateService) {
-  return () => translate.setDefaultLang('en'); // Set default language
+  return () => {
+    const browserLang = translate.getBrowserLang();
+    const defaultLang = browserLang?.match(/de|en/) ? browserLang : 'en';
+    translate.setDefaultLang(defaultLang);
+  };
 }
 
 export const appConfig: ApplicationConfig = {
@@ -17,7 +21,7 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(),
     {
       provide: APP_INITIALIZER,
-      useFactory: (authService: AuthService) => (authService.checkUser()),
+      useFactory: (authService: AuthService) => () => authService.checkUser(),
       deps: [AuthService],
       multi: true,
     },
