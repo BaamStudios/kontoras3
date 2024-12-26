@@ -52,6 +52,12 @@ export class Person extends Customer {
   lastname = '';
 
   /**
+   * The birthdate of the person.
+   */
+  @Fields.string({ caption: 'Geburtsdatum' })
+  birthdate = '';
+
+  /**
    * The name addon of the person.
    */
   @Fields.string({ caption: 'Namenszusatz' })

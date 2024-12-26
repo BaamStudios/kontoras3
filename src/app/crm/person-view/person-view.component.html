@@ -48,6 +48,10 @@
           <th>{{ 'createdAt' | translate }}</th>
           <td>{{ entity.createdAt | date : 'short' }} Uhr</td>
         </tr>
+        <tr *ngIf="featureFlags.personView.showBirthdate">
+          <th>{{ 'birthdate' | translate }}</th>
+          <td>{{ entity.birthdate | date : 'shortDate' }}</td>
+        </tr>
       </tbody>
     </table>
     <ng-container *ngIf="featureFlags.personView.showAddresses">

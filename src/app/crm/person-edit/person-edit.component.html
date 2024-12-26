@@ -58,6 +58,13 @@
           [label]="'customerNumber' | translate"
         ></app-autofield>
       </ng-container>
+      <ng-container *ngIf="featureFlags.showBirthdate">
+        <app-autofield
+          [field]="fields.birthdate"
+          [(entity)]="entity"
+          [label]="'birthdate' | translate"
+        ></app-autofield>
+      </ng-container>
       <h3>Anschrift</h3>
       <!-- TODO ADD COMPOENNT FOR ADDRESS-->
       <!-- <app-autofield

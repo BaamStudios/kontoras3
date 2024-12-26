@@ -16,6 +16,7 @@ export const featureFlags = {
     showCustomerNumber: true,
     showCreatedAt: true,
     showAddresses: true,
+    showBirthdate: true,
   },
   companyView: {
     showCompanyName: true,
@@ -37,6 +38,7 @@ export const featureFlags = {
     showFirstname: true,
     showLastname: true,
     showCustomerNumber: true,
+    showBirthdate: true,
     showAddresses: true,
     showContactDetails: true,
     showPaymentInformation: true,

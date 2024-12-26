@@ -61,5 +61,6 @@
   "country": "Country",
   "addressType": "Address Type",
   "removeAddress": "Remove Address",
-  "copyToClipboard": "Copy to clipboard"
+  "copyToClipboard": "Copy to clipboard",
+  "birthdate": "Birthdate"
 }
