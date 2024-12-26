@@ -9,6 +9,7 @@ import { CrmComponent } from '../crm/crm.component';
 import { HeadComponent } from '../head/head.component';
 import { featureFlags } from '../feature-flags';
 import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-navigation',
@@ -23,6 +24,7 @@ import { CommonModule } from '@angular/common';
     RouterOutlet,
     HeadComponent,
     CrmComponent,
+    TranslateModule
   ],
   templateUrl: './navigation.component.html',
   styleUrl: './navigation.component.scss',

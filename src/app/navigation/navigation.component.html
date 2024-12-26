@@ -1,14 +1,14 @@
 <clr-vertical-nav [clrVerticalNavCollapsible]="true">
   <clr-vertical-nav-group routerLinkActive="active">
     <cds-icon shape="user" clrVerticalNavIcon></cds-icon>
-    Kunden
+    {{ 'navigation.customers' | translate }}
     <clr-vertical-nav-group-children>
       <ng-container *ngIf="featureFlags.navigation.showCustomerOverview">
         <a
           clrVerticalNavLink
           routerLink="./crm/overview"
           routerLinkActive="active"
-          >Kundenübersicht</a
+          >{{ 'navigation.customerOverview' | translate }}</a
         >
       </ng-container>
       <ng-container *ngIf="featureFlags.navigation.showNewInvoice">
@@ -16,50 +16,50 @@
           clrVerticalNavLink
           routerLink="./om/invoice/new"
           routerLinkActive="active"
-          >Neue Rechnung</a
+          >{{ 'navigation.newInvoice' | translate }}</a
         >
       </ng-container>
     </clr-vertical-nav-group-children>
   </clr-vertical-nav-group>
   <clr-vertical-nav-group routerLinkActive="active">
     <cds-icon shape="flame" clrVerticalNavIcon></cds-icon>
-    Fire
+    {{ 'navigation.fire' | translate }}
     <clr-vertical-nav-group-children>
       <a
         clrVerticalNavLink
         routerLink="./fire/charmander"
         routerLinkActive="active"
-        >Charmander</a
+        >{{ 'navigation.charmander' | translate }}</a
       >
       <a
         clrVerticalNavLink
         routerLink="./fire/charizard"
         routerLinkActive="active"
-        >Charizard</a
+        >{{ 'navigation.charizard' | translate }}</a
       >
     </clr-vertical-nav-group-children>
   </clr-vertical-nav-group>
   <clr-vertical-nav-group routerLinkActive="active">
     <cds-icon shape="bolt" clrVerticalNavIcon></cds-icon>
-    Electric
+    {{ 'navigation.electric' | translate }}
     <clr-vertical-nav-group-children>
       <a
         clrVerticalNavLink
         routerLink="./electric/pikachu"
         routerLinkActive="active"
-        >Pikachu</a
+        >{{ 'navigation.pikachu' | translate }}</a
       >
       <a
         clrVerticalNavLink
         routerLink="./electric/raichu"
         routerLinkActive="active"
-        >Raichu</a
+        >{{ 'navigation.raichu' | translate }}</a
       >
     </clr-vertical-nav-group-children>
   </clr-vertical-nav-group>
   <a clrVerticalNavLink routerLinkActive="active" routerLink="./credit">
     <cds-icon shape="certificate" clrVerticalNavIcon></cds-icon>
-    Credit
+    {{ 'navigation.credit' | translate }}
   </a>
 </clr-vertical-nav>
 <div class="content-area"><router-outlet /></div>
