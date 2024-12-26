@@ -93,3 +93,16 @@
   <clr-control-error>{{ form.form.get(field.key)?.errors }}</clr-control-error>
   <clr-control-helper *ngIf="helperText">{{ helperText }}</clr-control-helper>
 </clr-select-container>
+
+<clr-date-container *ngIf="field.inputType === 'date'">
+  <label *ngIf="showLabel">{{ label || field.caption }}</label>
+  <input
+    type="date"
+    autocomplete="off"
+    clrDate
+    [(clrDate)]="entity[field.key]"
+    [ngStyle]="{ width: width }"
+    [name]="field.key"
+    (blur)="onBlur($event)"
+  />
+</clr-date-container>

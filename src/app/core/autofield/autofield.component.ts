@@ -10,6 +10,7 @@ import {
   ClarityModule,
   ClrCheckboxModule,
   ClrComboboxModule,
+  ClrDatepickerModule,
   ClrFormsModule,
   ClrTextareaModule,
 } from '@clr/angular';
@@ -25,7 +26,8 @@ import { FieldMetadata, getEntityRef, getValueList } from 'remult';
     ClarityModule,
     ClrCheckboxModule,
     ClrComboboxModule,
-    ClrTextareaModule
+    ClrTextareaModule,
+    ClrDatepickerModule
   ],
   templateUrl: './autofield.component.html',
   styleUrl: './autofield.component.scss',
