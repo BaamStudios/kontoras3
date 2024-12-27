@@ -8,7 +8,8 @@ import { CompanyViewComponent } from './crm/company-view/company-view.component'
 import { CompanyEditComponent } from './crm/company-edit/company-edit.component';
 import { NumberRangesComponent } from './settings/number-ranges.component';
 import { InvoiceEditorComponent } from './invoice/invoice-editor/invoice-editor/invoice-editor.component';
-import { ContestComponent } from './schuetze/contest/contest.component';
+import { SchuetzeComponent } from './schuetze/schuetze.component';
+import { ContestEditComponent } from './schuetze/contest-edit/contest-edit.component';
 
 export const routes: Routes = [
 
@@ -51,9 +52,14 @@ export const routes: Routes = [
 
 
 {
+  path: 'schuetze/overview',
+  canActivate: [authGuard],
+  component: SchuetzeComponent,
+},
+{
   path: 'schuetze/contest/:id',
   canActivate: [authGuard],
-  component: ContestComponent,
+  component: ContestEditComponent,
 },
 
 {

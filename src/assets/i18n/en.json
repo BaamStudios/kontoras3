@@ -62,5 +62,13 @@
   "addressType": "Address Type",
   "removeAddress": "Remove Address",
   "copyToClipboard": "Copy to clipboard",
-  "birthdate": "Birthdate"
+  "birthdate": "Birthdate",
+  "add": "Add",
+  "contest": "Contest",
+  "disciplineType": "Discipline Type",
+  "series": "Series",
+  "shots": "Shots",
+  "distance": "Distance",
+  "contests": "Contests",
+  "schuetzeOverview": "Overview"
 }

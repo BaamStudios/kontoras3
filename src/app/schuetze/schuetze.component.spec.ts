@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { InvoiceEditorComponent } from './contest.component';
+import { SchuetzeComponent } from './schuetze.component';
 
-describe('InvoiceEditorComponent', () => {
-  let component: InvoiceEditorComponent;
-  let fixture: ComponentFixture<InvoiceEditorComponent>;
+describe('SchuetzeComponent', () => {
+  let component: SchuetzeComponent;
+  let fixture: ComponentFixture<SchuetzeComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [InvoiceEditorComponent]
+      imports: [SchuetzeComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(InvoiceEditorComponent);
+    fixture = TestBed.createComponent(SchuetzeComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

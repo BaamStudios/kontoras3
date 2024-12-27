@@ -1,0 +1,6 @@
+
+
+Ringe: Ganzzahlen der Trefferpunkte 1-10
+Punkte: Trefferpunkte mit 10tel Auswertung. 10.9   30x 0.9 = 27
+
+

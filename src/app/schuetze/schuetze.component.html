@@ -1,0 +1,93 @@
+<div cds-layout="horizontal gap:md align:left">
+  <h1>{{ 'schuetzeOverview' | translate }}</h1>
+
+  <!-- <button [routerLink]="['/crm/person', 'new', 'edit']"
+    cds-layout="align:right align:vertical-center"
+    type="button"
+    class="btn btn-icon btn-primary"
+    aria-label="add-customer"
+  >
+    Kunden hinzufügen
+    <cds-icon shape="plus"></cds-icon>
+  </button> -->
+  <clr-dropdown cds-layout="align:right align:vertical-center">
+    <button class="btn btn-primary" clrDropdownTrigger>
+      <cds-icon shape="angle" direction="down"></cds-icon>{{ 'add' | translate }}
+    </button>
+    <clr-dropdown-menu clrPosition="bottom-right" *clrIfOpen>
+      <div
+        aria-label="Contest"
+        clrDropdownItem
+        style="font-size: 20px"
+        cds-layout="p-y:xs"
+        [routerLink]="['/schuetze/contest', 'new']"
+      >
+        <cds-icon size="md" shape="crown"></cds-icon>{{ 'contest' | translate }}
+      </div>
+      <!-- <div
+        aria-label="Firma"
+        clrDropdownItem
+        style="font-size: 20px"
+        cds-layout="p-y:xs"
+        [routerLink]="['/crm/company', 'new', 'edit']"
+      >
+        <cds-icon size="md" shape="building"></cds-icon>{{ 'company' | translate }}
+      </div> -->
+    </clr-dropdown-menu>
+  </clr-dropdown>
+</div>
+
+<main>
+  <h3>{{ 'contests' | translate }}</h3>
+  <clr-datagrid>
+    <clr-dg-column *ngIf="featureFlags.showIdColumn" style="width: 20px">{{ 'id' | translate }}</clr-dg-column>
+    <clr-dg-column *ngIf="featureFlags.showNameColumn">{{ 'name' | translate }}</clr-dg-column>
+    <clr-dg-column *ngIf="featureFlags.showDisciplineTypeColumn">{{ 'disciplineType' | translate }}</clr-dg-column>
+    <clr-dg-column *ngIf="featureFlags.showSeriesColumn">{{ 'series' | translate }}</clr-dg-column>
+    <clr-dg-column *ngIf="featureFlags.showShotsColumn">{{ 'shots' | translate }}</clr-dg-column>
+    <clr-dg-column *ngIf="featureFlags.showDistanceColumn">{{ 'distance' | translate }}</clr-dg-column>
+    <clr-dg-column *ngIf="featureFlags.showCreatedAtColumn" style="width: 200px" [clrDgField]="'createdAt'" [(clrDgSortOrder)]="sortOrder">{{ 'createdAt' | translate }}</clr-dg-column>
+    <clr-dg-column *ngIf="featureFlags.showUpdatedAtColumn" style="width: 200px" [clrDgField]="'updatedAt'">{{ 'updatedAt' | translate }}</clr-dg-column>
+    <clr-dg-column style="width: 200px" ></clr-dg-column>
+    <clr-dg-row
+      *clrDgItems="let contest of contests"
+      [clrDgItem]="contest"
+      (click)="openContest(contest)"
+    >
+      <clr-dg-cell *ngIf="featureFlags.showIdColumn" style="width: 20px">
+        <clr-tooltip>
+          <cds-icon
+            clrTooltipTrigger
+            [attr.shape]="'crown'"
+            size="18"
+            (click)="copyContestId(contest.id)"
+          ></cds-icon>
+          <clr-tooltip-content [clrSize]="'md'">
+            {{ contest.id }}
+          </clr-tooltip-content>
+        </clr-tooltip>
+      </clr-dg-cell>
+      <clr-dg-cell *ngIf="featureFlags.showNameColumn">{{ contest.name }}</clr-dg-cell>
+      <clr-dg-cell *ngIf="featureFlags.showDisciplineTypeColumn">{{ contest.disciplineType }}</clr-dg-cell>
+      <clr-dg-cell *ngIf="featureFlags.showSeriesColumn">{{ contest.series }} Ziele</clr-dg-cell>
+      <clr-dg-cell *ngIf="featureFlags.showShotsColumn">{{ contest.shots }} Schuss pro Ziel</clr-dg-cell>
+      <clr-dg-cell *ngIf="featureFlags.showDistanceColumn">{{ contest.distance }}m</clr-dg-cell>
+      <clr-dg-cell *ngIf="featureFlags.showCreatedAtColumn">{{ contest.createdAt | date : "short" }} Uhr</clr-dg-cell>
+      <clr-dg-cell *ngIf="featureFlags.showUpdatedAtColumn">{{ contest.updatedAt | date : "short" }} Uhr</clr-dg-cell>
+      <clr-dg-cell>
+        <button
+          class="btn btn-sm btn-primary"
+          [routerLink]="['/schuetze/contest', contest.id, 'edit']"
+          aria-label="edit"
+        >
+          {{ 'start' | translate }}
+        </button>
+      </clr-dg-cell>
+    </clr-dg-row>
+
+    <clr-dg-footer>{{ contests.length }} {{ 'contests' | translate }}</clr-dg-footer>
+  </clr-datagrid>
+
+
+
+</main>

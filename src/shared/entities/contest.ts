@@ -10,7 +10,6 @@ type DisciplineType = (typeof disciplineTypes)[number];
 @SearchableEntity(Contest, 'contests', {
   allowApiCrud: true,
   searchFields: [
-    'shooterId',
     'name',
     'series',
     'shots',
@@ -23,11 +22,6 @@ type DisciplineType = (typeof disciplineTypes)[number];
  */
 export class Contest extends Base {
 
-  /**
-   * The shooter ID associated with this contest.
-   */
-  @Fields.string({ caption: 'Schützen-ID' })
-  shooterId = '';
 
   /**
    * The name of the contest.
@@ -46,21 +40,21 @@ export class Contest extends Base {
   disciplineType?: DisciplineType;
 
   /**
-   * The number of series in the contest.
+   * The number of targets in series in the contest.
    */
-  @Fields.number({ caption: 'Serien' })
-  series = 3;
+  @Fields.number({ caption: 'Serie' })
+  series = 30;
 
   /**
-   * The number of shots per series in the contest.
+   * The number of shots per target in this series.
    */
-  @Fields.number({ caption: 'Schussanzahl pro Serie' })
-  shots = 10;
+  @Fields.number({ caption: 'Schussanzahl pro Ziel' })
+  shots = 1;
 
   /**
    * The distance in meters for the contest.
    */
-  @Fields.number({ caption: 'Distanz in [m]' })
+  @Fields.number({ caption: 'Distanz zum Ziel in [m]' })
   distance = 10;
 
 }

@@ -4,9 +4,7 @@
 
     <div cds-layout="align:right align:vertical-center">
       <button
-        [routerLink]="
-          entity.id ? ['/crm/person', entity.id.toString()] : ['/crm/overview']
-        "
+        [routerLink]="['/schuetze/overview']"
         type="button"
         class="btn btn-icon btn-outline"
         aria-label="cancel-edit-person"
@@ -21,6 +19,14 @@
         aria-label="save-person"
       >
         <cds-icon shape="floppy"></cds-icon>{{ 'saveChanges' | translate }}
+      </button>
+      <button *ngIf="entity.id"
+        (click)="deleteContest()"
+        type="button"
+        class="btn btn-icon btn-danger"
+        aria-label="delete-contest"
+      >
+        <cds-icon shape="trash"></cds-icon>{{ 'delete' | translate }}
       </button>
     </div>
   </div>
@@ -55,6 +61,8 @@
       [field]="fields.distance"
       width="350px"
       [(entity)]="entity"
+      label="Distanz"
+      helperText="Distanz in Metern"
     ></app-autofield>
     </form>
   </main>

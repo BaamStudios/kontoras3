@@ -62,5 +62,13 @@
   "welcome": "Willkommen",
   "yes": "Ja",
   "zip": "PLZ",
-  "birthdate": "Geburtsdatum"
+  "birthdate": "Geburtsdatum",
+  "add": "Hinzufügen",
+  "contest": "Wettkampf",
+  "disciplineType": "Disziplinart",
+  "series": "Serien",
+  "shots": "Schüsse",
+  "distance": "Entfernung",
+  "contests": "Wettkämpfe",
+  "schuetzeOverview": "Übersicht"
 }

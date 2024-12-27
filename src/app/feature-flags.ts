@@ -11,6 +11,18 @@ export const featureFlags = {
     showCreatedAtColumn: true,
     showUpdatedAtColumn: true,
   },
+  schuetzeOverview: {
+    enabled: true,
+    showIdColumn: true,
+    showNameColumn: true,
+    showCreatedAtColumn: true,
+    showUpdatedAtColumn: true,
+    showShooterIdColumn: true,
+    showSeriesColumn: true,
+    showShotsColumn: true,
+    showDistanceColumn: true,
+    showDisciplineTypeColumn: true,
+  },
   personView: {
     showPerson: true,
     showCustomerNumber: true,
