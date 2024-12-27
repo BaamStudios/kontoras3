@@ -70,7 +70,7 @@
       <clr-dg-cell *ngIf="featureFlags.showNameColumn">{{ contest.name }}</clr-dg-cell>
       <clr-dg-cell *ngIf="featureFlags.showDisciplineTypeColumn">{{ contest.disciplineType }}</clr-dg-cell>
       <clr-dg-cell *ngIf="featureFlags.showSeriesColumn">{{ contest.series }} Ziele</clr-dg-cell>
-      <clr-dg-cell *ngIf="featureFlags.showShotsColumn">{{ contest.shots }} Schuss pro Ziel</clr-dg-cell>
+      <clr-dg-cell *ngIf="featureFlags.showShotsColumn">{{ contest.series * contest.shots }} Schuss ({{ contest.shots }} Schuss pro Ziel)</clr-dg-cell>
       <clr-dg-cell *ngIf="featureFlags.showDistanceColumn">{{ contest.distance }}m</clr-dg-cell>
       <clr-dg-cell *ngIf="featureFlags.showCreatedAtColumn">{{ contest.createdAt | date : "short" }} Uhr</clr-dg-cell>
       <clr-dg-cell *ngIf="featureFlags.showUpdatedAtColumn">{{ contest.updatedAt | date : "short" }} Uhr</clr-dg-cell>
