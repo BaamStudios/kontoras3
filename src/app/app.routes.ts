@@ -10,6 +10,7 @@ import { NumberRangesComponent } from './settings/number-ranges.component';
 import { InvoiceEditorComponent } from './invoice/invoice-editor/invoice-editor/invoice-editor.component';
 import { SchuetzeComponent } from './schuetze/schuetze.component';
 import { ContestEditComponent } from './schuetze/contest-edit/contest-edit.component';
+import { ContestRunComponent } from './schuetze/contest-run/contest-run.component';
 
 export const routes: Routes = [
 
@@ -60,6 +61,12 @@ export const routes: Routes = [
   path: 'schuetze/contest/:id',
   canActivate: [authGuard],
   component: ContestEditComponent,
+},
+
+{
+  path: 'schuetze/contest/:id/run',
+  canActivate: [authGuard],
+  component: ContestRunComponent,
 },
 
 {

@@ -73,6 +73,10 @@ export class Person extends Customer {
     return this.firstname + ' ' + this.lastname;
   }
 
+  override toString() {
+    return this.displayName;
+  }
+
   get customerType() {
     return 'Person';
   }

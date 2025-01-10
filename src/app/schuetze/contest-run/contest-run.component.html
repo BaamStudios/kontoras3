@@ -1,0 +1,181 @@
+<h1>
+  Wettkampf: {{ contest?.name }}
+  <span *ngIf="selectedShooter"> von {{ selectedShooter.displayName }} </span>
+</h1>
+
+<form clrForm #contestForm="ngForm">
+  <clr-combobox-container>
+    <label>Schütze</label>
+    <clr-combobox
+      [ngModel]="selectedShooter"
+      (ngModelChange)="selectedShooterChanged($event)"
+      name="selectedShooter"
+      required
+      [disabled]="!!selectedShooting"
+      placeholder="Schützen auswählen"
+    >
+      <clr-options>
+        <clr-option *ngFor="let shooter of shooters" [clrValue]="shooter">{{
+          shooter.firstname
+        }}</clr-option>
+      </clr-options>
+    </clr-combobox>
+  </clr-combobox-container>
+
+  <button
+    class="btn btn-primary"
+    [disabled]="!selectedShooter || selectedShooting"
+    (click)="createShooting()"
+  >
+    Neue Eingabe
+  </button>
+  <p *ngIf="!selectedShooter">Bitte einen Schützen auswählen!</p>
+
+  <ng-container *ngIf="selectedShooting">
+    <clr-radio-container clrInline>
+      <label>Anschlag</label>
+
+      <clr-radio-wrapper>
+        <input
+          type="radio"
+          clrRadio
+          name="options"
+          required
+          value="stehend"
+          [(ngModel)]="selectedShooting.anschlag"
+        />
+        <label>stehend</label>
+      </clr-radio-wrapper>
+      <clr-radio-wrapper>
+        <input
+          type="radio"
+          clrRadio
+          name="options"
+          required
+          value="sitzend"
+          [(ngModel)]="selectedShooting.anschlag"
+        />
+        <label>sitzend</label>
+      </clr-radio-wrapper>
+      <clr-radio-wrapper>
+        <input
+          type="radio"
+          clrRadio
+          name="options"
+          required
+          value="liegend"
+          [(ngModel)]="selectedShooting.anschlag"
+        />
+        <label>liegend</label>
+      </clr-radio-wrapper>
+
+      <clr-control-error>This field is required!</clr-control-error>
+    </clr-radio-container>
+
+    <clr-checkbox-container>
+      <label>Auflage</label>
+      <clr-checkbox-wrapper>
+        <input
+          type="checkbox"
+          clrCheckbox
+          name="auflage"
+          value="auflage"
+          [(ngModel)]="selectedShooting.support"
+        />
+        <label>Mit Auflage?</label>
+      </clr-checkbox-wrapper>
+    </clr-checkbox-container>
+
+    <clr-input-container>
+      <label>Ringzahl</label>
+      <input
+        placeholder="300"
+        clrInput
+        [(ngModel)]="selectedShooting.rings"
+        name="rings"
+        required
+      />
+      <clr-control-helper>Ganze Ringe</clr-control-helper>
+      <clr-control-error>This field is required!</clr-control-error>
+    </clr-input-container>
+
+    <clr-input-container>
+      <label>Punktzahl</label>
+      <input
+        placeholder="327"
+        clrInput
+        [(ngModel)]="selectedShooting.points"
+        name="points"
+        required
+        type="number"
+      />
+      <clr-control-helper>Punkte mit Teiler</clr-control-helper>
+      <clr-control-error>This field is required!</clr-control-error>
+    </clr-input-container>
+
+    <clr-date-container>
+      <label for="shootingDate">Datum</label>
+      <input
+        clrDate
+        name="shootingDate"
+        [(clrDate)]="selectedShooting.shootingDate"
+        required
+        type="number"
+      />
+      <clr-control-helper>Datum auswählen</clr-control-helper>
+      <clr-control-error>This field is required!</clr-control-error>
+    </clr-date-container>
+
+    <button class="btn btn-outline" (click)="cancelShooting()">
+      Eingabe abbrechen
+    </button>
+    <button
+      class="btn btn-success"
+      (click)="saveShooting()"
+      [disabled]="contestForm?.form?.invalid"
+    >
+      Eingabe speichern
+    </button>
+  </ng-container>
+</form>
+
+<ng-container *ngIf="this.selectedShooter">
+  <h3>Ergebnisse von {{ selectedShooter.displayName }}</h3>
+  <clr-datagrid>
+    <clr-dg-column style="width: 200px">Datum</clr-dg-column>
+    <clr-dg-column style="width: 200px">Ringzahl</clr-dg-column>
+    <clr-dg-column style="width: 200px">Punktzahl (Teiler)</clr-dg-column>
+    <clr-dg-column style="width: 100px">Aktionen</clr-dg-column>
+    <clr-dg-row *clrDgItems="let result of shooterResults" [clrDgItem]="result">
+      <clr-dg-cell>{{ result.shootingDate | date : "dd.MM.yyyy" }}</clr-dg-cell>
+      <clr-dg-cell>{{ result.rings }}</clr-dg-cell>
+      <clr-dg-cell>{{ result.points }}</clr-dg-cell>
+      <clr-dg-cell>
+        <button class="btn btn-sm btn-outline" (click)="editShooting(result)">
+          Bearbeiten
+        </button>
+        <button class="btn btn-sm btn-outline-danger" (click)="confirmDelete(result)">
+          Löschen
+        </button>
+      </clr-dg-cell>
+    </clr-dg-row>
+
+    <clr-dg-footer>{{ shooterResults.length }} Ergebnisse</clr-dg-footer>
+  </clr-datagrid>
+</ng-container>
+
+<!-- Confirmation Modal -->
+<clr-modal [(clrModalOpen)]="deleteModalOpen">
+  <h3 class="modal-title">Eintrag löschen</h3>
+  <div class="modal-body">
+    Möchten Sie diesen Eintrag wirklich löschen?
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-outline" (click)="deleteModalOpen = false">
+      Abbrechen
+    </button>
+    <button class="btn btn-danger" (click)="deleteShooting(deleteCandidate)">
+      Löschen
+    </button>
+  </div>
+</clr-modal>

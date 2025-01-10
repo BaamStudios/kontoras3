@@ -52,7 +52,7 @@
     <clr-dg-row
       *clrDgItems="let contest of contests"
       [clrDgItem]="contest"
-      (click)="openContest(contest)"
+      (click)="runContest(contest)"
     >
       <clr-dg-cell *ngIf="featureFlags.showIdColumn" style="width: 20px">
         <clr-tooltip>
@@ -77,10 +77,10 @@
       <clr-dg-cell>
         <button
           class="btn btn-sm btn-primary"
-          [routerLink]="['/schuetze/contest', contest.id, 'edit']"
+          [routerLink]="['/schuetze/contest', contest.id]"
           aria-label="edit"
         >
-          {{ 'start' | translate }}
+          {{ 'edit' | translate }}
         </button>
       </clr-dg-cell>
     </clr-dg-row>

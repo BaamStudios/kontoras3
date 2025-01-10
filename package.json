@@ -7,7 +7,7 @@
     "build": "ng build && tsc -p tsconfig.server.json",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "dev": "ng serve --proxy-config proxy.conf.json",
+    "dev": "ng serve --proxy-config proxy.conf.json --port 6400",
     "dev-node": "tsx watch src/server -- --no-open",
     "publish": "nexe dist/server/index.js -o published/kontoras3.exe -t 20.14.0 -b -r \"dist/kontoras3/browser/**/*\""
   },

@@ -41,7 +41,7 @@ throw new Error('Method not implemented.');
     this.toastr.success(this.translate.instant('clipboardSuccess'));
   }
 
-  openContest(entity: Contest) {
-    this.router.navigateByUrl('/schuetze/contest/' + entity.id); // Use 'this.router' to navigate
+  runContest(entity: Contest) {
+    this.router.navigateByUrl('/schuetze/contest/' + entity.id + '/run'); // Use 'this.router' to navigate
   }
 }
