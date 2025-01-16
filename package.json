@@ -34,7 +34,6 @@
     "express-session": "^1.18.0",
     "flexsearch": "^0.7.43",
     "handlebars": "^4.7.8",
-    "ng2-charts": "^8.0.0",
     "ngx-toastr": "^19.0.0",
     "node-red": "^3.1.9",
     "open": "^8.4.2",
