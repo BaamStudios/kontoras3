@@ -13,18 +13,17 @@ import {
 import { AutofieldComponent } from '../../core/autofield/autofield.component';
 
 @Component({
-  selector: 'app-number-range-edit',
-  standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    ClrFormsModule,
-    ClarityModule,
-    AutofieldComponent,
-    TranslateModule
-  ],
-  templateUrl: './number-range-edit.component.html',
-  styleUrl: './number-range-edit.component.scss',
+    selector: 'app-number-range-edit',
+    imports: [
+        CommonModule,
+        FormsModule,
+        ClrFormsModule,
+        ClarityModule,
+        AutofieldComponent,
+        TranslateModule
+    ],
+    templateUrl: './number-range-edit.component.html',
+    styleUrl: './number-range-edit.component.scss'
 })
 export class NumberRangeEditComponent implements OnInit {
   repo = remult.repo(NumberRange);

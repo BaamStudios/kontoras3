@@ -9,11 +9,10 @@ import { TranslateModule } from '@ngx-translate/core';
 import {} from '@angular/common/http';
 
 @Component({
-  selector: 'app-root',
-  standalone: true,
-  imports: [CommonModule, RouterOutlet, ClarityModule, HeadComponent, NavigationComponent, TranslateModule],
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+    selector: 'app-root',
+    imports: [CommonModule, RouterOutlet, ClarityModule, HeadComponent, NavigationComponent, TranslateModule],
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
 

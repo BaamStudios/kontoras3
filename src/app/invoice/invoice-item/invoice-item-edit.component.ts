@@ -16,12 +16,10 @@ import { AutofieldComponent } from '../../core/autofield/autofield.component';
 import { EditComponent } from '../../core/edit/edit.component';
 
 @Component({
-  selector: 'app-invoice-item-edit',
-  standalone: true,
-  imports: [AutofieldComponent, FormsModule, ClrFormsModule],
-  templateUrl: './invoice-item-edit.component.html',
-  styleUrl: './invoice-item-edit.component.scss',
-
+    selector: 'app-invoice-item-edit',
+    imports: [AutofieldComponent, FormsModule, ClrFormsModule],
+    templateUrl: './invoice-item-edit.component.html',
+    styleUrl: './invoice-item-edit.component.scss'
 })
 export class InvoiceItemEditComponent implements OnInit, OnDestroy, AfterViewInit {
   @Input() item!: InvoiceItem;

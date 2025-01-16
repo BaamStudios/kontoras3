@@ -1,49 +1,44 @@
-import { CommonModule, JsonPipe } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import {
   ClarityModule,
   ClrCheckboxModule,
   ClrComboboxModule,
   ClrDatepickerModule,
   ClrFormsModule,
+  ClrModalModule,
   ClrRadioModule,
   ClrTabsModule,
-  ClrModalModule, // Import ClrModalModule
 } from '@clr/angular';
 import { TranslateModule } from '@ngx-translate/core'; // Import TranslateModule
 import { remult } from 'remult';
-import { Contest } from '../../../shared/entities/contest';
-import { AutofieldComponent } from '../../core/autofield/autofield.component';
 import { idType } from 'remult/src/remult3/remult3';
+import { Contest } from '../../../shared/entities/contest';
 import { Person } from '../../../shared/entities/person';
 import { Shooting } from '../../../shared/entities/shooting';
 //import { BaseChartDirective } from 'ng2-charts';
 
 
 @Component({
-  selector: 'app-contest-run',
-  standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    ClrFormsModule,
-    ClarityModule,
-    ClrCheckboxModule,
-    ClrComboboxModule,
-    ClrRadioModule,
-    AutofieldComponent,
-    ClrTabsModule,
-    JsonPipe,
-    RouterLink,
-    TranslateModule, // Add TranslateModule to imports
-    ClrDatepickerModule,
-    ClrModalModule, // Add ClrModalModule to imports,
-    //BaseChartDirective
-  ],
-  templateUrl: './contest-run.component.html',
-  styleUrl: './contest-run.component.scss',
+    selector: 'app-contest-run',
+    imports: [
+        CommonModule,
+        FormsModule,
+        ClrFormsModule,
+        ClarityModule,
+        ClrCheckboxModule,
+        ClrComboboxModule,
+        ClrRadioModule,
+        ClrTabsModule,
+        TranslateModule, // Add TranslateModule to imports
+        ClrDatepickerModule,
+        ClrModalModule, // Add ClrModalModule to imports,
+        //BaseChartDirective
+    ],
+    templateUrl: './contest-run.component.html',
+    styleUrl: './contest-run.component.scss'
 })
 export class ContestRunComponent implements OnInit {
 

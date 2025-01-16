@@ -4,14 +4,12 @@ import { ClrDropdownModule, ClrIconModule } from '@clr/angular';
 import { AuthService } from '../auth/auth.service';
 import { CommonModule } from '@angular/common';
 import { remult } from 'remult';
-import { RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
-  selector: 'app-head',
-  templateUrl: './head.component.html',
-  styleUrls: ['./head.component.scss'],
-  imports: [ClrDropdownModule, ClrIconModule, CommonModule, RouterLink, RouterLinkActive],
-  standalone: true,
+    selector: 'app-head',
+    templateUrl: './head.component.html',
+    styleUrls: ['./head.component.scss'],
+    imports: [ClrDropdownModule, ClrIconModule, CommonModule]
 })
 export class HeadComponent {
   remult = remult; // Define remult property

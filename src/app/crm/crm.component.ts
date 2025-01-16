@@ -12,11 +12,10 @@ import { Company } from '../../shared/entities/company';
 import { featureFlags } from '../feature-flags';
 
 @Component({
-  selector: 'app-crm',
-  standalone: true,
-  imports: [CommonModule, FormsModule, ClarityModule, ClrComboboxModule, ClrDatagridModule, RouterLink, ClrDropdownModule, TranslateModule],
-  templateUrl: './crm.component.html',
-  styleUrl: './crm.component.scss',
+    selector: 'app-crm',
+    imports: [CommonModule, FormsModule, ClarityModule, ClrComboboxModule, ClrDatagridModule, RouterLink, ClrDropdownModule, TranslateModule],
+    templateUrl: './crm.component.html',
+    styleUrl: './crm.component.scss'
 })
 export class CrmComponent implements OnInit {
   personRepo = remult.repo(Person);

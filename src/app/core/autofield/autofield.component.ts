@@ -17,21 +17,20 @@ import {
 import { FieldMetadata, getEntityRef, getValueList } from 'remult';
 
 @Component({
-  selector: 'app-autofield',
-  standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    ClrFormsModule,
-    ClarityModule,
-    ClrCheckboxModule,
-    ClrComboboxModule,
-    ClrTextareaModule,
-    ClrDatepickerModule
-  ],
-  templateUrl: './autofield.component.html',
-  styleUrl: './autofield.component.scss',
-  viewProviders: [{ provide: ControlContainer, useExisting: NgForm }],
+    selector: 'app-autofield',
+    imports: [
+        CommonModule,
+        FormsModule,
+        ClrFormsModule,
+        ClarityModule,
+        ClrCheckboxModule,
+        ClrComboboxModule,
+        ClrTextareaModule,
+        ClrDatepickerModule
+    ],
+    templateUrl: './autofield.component.html',
+    styleUrl: './autofield.component.scss',
+    viewProviders: [{ provide: ControlContainer, useExisting: NgForm }]
 })
 export class AutofieldComponent {
   @Input()

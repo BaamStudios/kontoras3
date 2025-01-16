@@ -7,11 +7,10 @@ import { ToastrService } from 'ngx-toastr';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
 
 @Component({
-  selector: 'app-address-view',
-  standalone: true,
-  imports: [CommonModule, ClarityModule, ClrAlertModule, TranslateModule],
-  templateUrl: './address-view.component.html',
-  styleUrl: './address-view.component.scss',
+    selector: 'app-address-view',
+    imports: [CommonModule, ClarityModule, ClrAlertModule, TranslateModule],
+    templateUrl: './address-view.component.html',
+    styleUrl: './address-view.component.scss'
 })
 export class AddressViewComponent {
   @Input()

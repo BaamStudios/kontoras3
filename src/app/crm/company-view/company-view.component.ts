@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { remult } from 'remult';
 import { Company } from '../../../shared/entities/company';
 import { Router, RouterLink } from '@angular/router';
-import { CommonModule, JsonPipe } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ClarityModule } from '@clr/angular';
 import { AddressViewComponent } from '../address-view/address-view.component';
@@ -10,11 +10,10 @@ import { TranslateModule } from '@ngx-translate/core'; // Import TranslateModule
 import { featureFlags } from '../../feature-flags';
 
 @Component({
-  selector: 'app-company-view',
-  standalone: true,
-  imports: [CommonModule, FormsModule, ClarityModule, JsonPipe, RouterLink, AddressViewComponent, TranslateModule], // Add TranslateModule to imports
-  templateUrl: './company-view.component.html',
-  styleUrls: ['./company-view.component.scss'],
+    selector: 'app-company-view',
+    imports: [CommonModule, FormsModule, ClarityModule, RouterLink, AddressViewComponent, TranslateModule], // Add TranslateModule to imports
+    templateUrl: './company-view.component.html',
+    styleUrls: ['./company-view.component.scss']
 })
 export class CompanyViewComponent implements OnInit {
   showConfirmDeleteModal = false;

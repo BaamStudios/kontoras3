@@ -19,24 +19,22 @@ import { Address } from '../../../shared/entities/address';
 import { featureFlags } from '../../feature-flags'; // Corrected import path
 
 @Component({
-  selector: 'app-company-edit',
-  standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    ClrFormsModule,
-    ClarityModule,
-    ClrCheckboxModule,
-    ClrComboboxModule,
-    AutofieldComponent,
-    ClrTabsModule,
-    JsonPipe,
-    RouterLink,
-    AddressEditComponent,
-    TranslateModule, // Add TranslateModule to imports
-  ],
-  templateUrl: './company-edit.component.html',
-  styleUrl: './company-edit.component.scss',
+    selector: 'app-company-edit',
+    imports: [
+        CommonModule,
+        FormsModule,
+        ClrFormsModule,
+        ClarityModule,
+        ClrCheckboxModule,
+        ClrComboboxModule,
+        AutofieldComponent,
+        ClrTabsModule,
+        RouterLink,
+        AddressEditComponent,
+        TranslateModule, // Add TranslateModule to imports
+    ],
+    templateUrl: './company-edit.component.html',
+    styleUrl: './company-edit.component.scss'
 })
 export class CompanyEditComponent extends EditComponent<Company> implements OnInit {
   override repo = remult.repo(Company);

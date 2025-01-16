@@ -19,11 +19,10 @@ import { Customer } from '../../../shared/entities/customer';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
-  selector: 'app-address-edit',
-  standalone: true,
-  imports: [AutofieldComponent, FormsModule, ClrFormsModule, TranslateModule],
-  templateUrl: './address-edit.component.html',
-  styleUrl: './address-edit.component.scss',
+    selector: 'app-address-edit',
+    imports: [AutofieldComponent, FormsModule, ClrFormsModule, TranslateModule],
+    templateUrl: './address-edit.component.html',
+    styleUrl: './address-edit.component.scss'
 })
 export class AddressEditComponent implements OnInit, OnDestroy, AfterViewInit {
   @Input() address!: Address;

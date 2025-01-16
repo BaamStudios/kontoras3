@@ -9,7 +9,7 @@ import {
   ClrFormsModule,
   ClrTabsModule,
 } from '@clr/angular';
-import { CommonModule, JsonPipe } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router'; // Import the Router module
 import { AutofieldComponent } from '../../core/autofield/autofield.component';
 import { EditComponent } from '../../core/edit/edit.component';
@@ -18,24 +18,22 @@ import { TranslateModule } from '@ngx-translate/core'; // Import TranslateModule
 import { featureFlags } from '../../feature-flags'; // Fix import path
 
 @Component({
-  selector: 'app-person-edit',
-  standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    ClrFormsModule,
-    ClarityModule,
-    ClrCheckboxModule,
-    ClrComboboxModule,
-    AutofieldComponent,
-    ClrTabsModule,
-    JsonPipe,
-    RouterLink,
-    AddressEditComponent,
-    TranslateModule, // Add TranslateModule to imports
-  ],
-  templateUrl: './person-edit.component.html',
-  styleUrl: './person-edit.component.scss',
+    selector: 'app-person-edit',
+    imports: [
+        CommonModule,
+        FormsModule,
+        ClrFormsModule,
+        ClarityModule,
+        ClrCheckboxModule,
+        ClrComboboxModule,
+        AutofieldComponent,
+        ClrTabsModule,
+        RouterLink,
+        AddressEditComponent,
+        TranslateModule, // Add TranslateModule to imports
+    ],
+    templateUrl: './person-edit.component.html',
+    styleUrl: './person-edit.component.scss'
 })
 export class PersonEditComponent extends EditComponent<Person> {
   repo = remult.repo(Person);

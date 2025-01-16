@@ -5,11 +5,10 @@ import { numberRangeTypes } from '../../shared/entities/number-range';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-number-ranges',
-  standalone: true,
-  imports: [NumberRangeEditComponent, ClarityModule, CommonModule],
-  templateUrl: './number-ranges.component.html',
-  styleUrl: './number-ranges.component.scss',
+    selector: 'app-number-ranges',
+    imports: [NumberRangeEditComponent, ClarityModule, CommonModule],
+    templateUrl: './number-ranges.component.html',
+    styleUrl: './number-ranges.component.scss'
 })
 export class NumberRangesComponent {
   numberRangeTypes = numberRangeTypes;

@@ -14,11 +14,10 @@ import { Person } from '../../shared/entities/person';
 import { Contest } from '../../shared/entities/contest';
 
 @Component({
-  selector: 'app-schuetze',
-  standalone: true,
-  imports: [CommonModule, FormsModule, ClarityModule, ClrComboboxModule, ClrDatagridModule, RouterLink, ClrDropdownModule, TranslateModule],
-  templateUrl: './schuetze.component.html',
-  styleUrl: './schuetze.component.scss',
+    selector: 'app-schuetze',
+    imports: [CommonModule, FormsModule, ClarityModule, ClrComboboxModule, ClrDatagridModule, RouterLink, ClrDropdownModule, TranslateModule],
+    templateUrl: './schuetze.component.html',
+    styleUrl: './schuetze.component.scss'
 })
 export class SchuetzeComponent implements OnInit {
 deleteContest(_t92: Contest) {
