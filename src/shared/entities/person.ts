@@ -55,7 +55,7 @@ export class Person extends Customer {
    * The birthdate of the person.
    */
   @Fields.dateOnly({ caption: 'Geburtsdatum' })
-  birthdate = '';
+  birthdate = new Date();
 
   /**
    * The name addon of the person.

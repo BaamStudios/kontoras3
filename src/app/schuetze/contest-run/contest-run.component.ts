@@ -19,6 +19,8 @@ import { AutofieldComponent } from '../../core/autofield/autofield.component';
 import { idType } from 'remult/src/remult3/remult3';
 import { Person } from '../../../shared/entities/person';
 import { Shooting } from '../../../shared/entities/shooting';
+//import { BaseChartDirective } from 'ng2-charts';
+
 
 @Component({
   selector: 'app-contest-run',
@@ -37,7 +39,8 @@ import { Shooting } from '../../../shared/entities/shooting';
     RouterLink,
     TranslateModule, // Add TranslateModule to imports
     ClrDatepickerModule,
-    ClrModalModule, // Add ClrModalModule to imports
+    ClrModalModule, // Add ClrModalModule to imports,
+    //BaseChartDirective
   ],
   templateUrl: './contest-run.component.html',
   styleUrl: './contest-run.component.scss',

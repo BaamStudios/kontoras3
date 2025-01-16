@@ -143,11 +143,14 @@
   <h3>Ergebnisse von {{ selectedShooter.displayName }}</h3>
   <clr-datagrid>
     <clr-dg-column style="width: 200px">Datum</clr-dg-column>
+    <clr-dg-column style="width: 150px">Position</clr-dg-column>
     <clr-dg-column style="width: 200px">Ringzahl</clr-dg-column>
     <clr-dg-column style="width: 200px">Punktzahl (Teiler)</clr-dg-column>
+
     <clr-dg-column style="width: 100px">Aktionen</clr-dg-column>
     <clr-dg-row *clrDgItems="let result of shooterResults" [clrDgItem]="result">
       <clr-dg-cell>{{ result.shootingDate | date : "dd.MM.yyyy" }}</clr-dg-cell>
+      <clr-dg-cell>{{ result.anschlag }} {{ result.support ? 'mit Auflage' : 'ohne Auflage' }}</clr-dg-cell>
       <clr-dg-cell>{{ result.rings }}</clr-dg-cell>
       <clr-dg-cell>{{ result.points }}</clr-dg-cell>
       <clr-dg-cell>
