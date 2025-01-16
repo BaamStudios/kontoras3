@@ -28,8 +28,8 @@ export class CrmComponent implements OnInit {
   constructor(private router: Router, private translate: TranslateService, private toastr: ToastrService) {} // Initialize the 'router', 'translate', and 'toastr' variables
 
   async ngOnInit() {
-    const persons = await this.personRepo.find();
-    const companies = await this.companyRepo.find();
+    const persons = this.featureFlags.includePersons ? await this.personRepo.find() : [];
+    const companies = this.featureFlags.includeCompanies ? await this.companyRepo.find() : [];
     this.customers = [...persons, ...companies];
   }
 

@@ -1,7 +1,7 @@
 export const featureFlags = {
   navigation: {
     showCustomerOverview: true,
-    showNewInvoice: true,
+    showNewInvoice: false,
   },
   crmOverview: {
     enabled: true,
@@ -10,6 +10,10 @@ export const featureFlags = {
     showNameColumn: true,
     showCreatedAtColumn: true,
     showUpdatedAtColumn: true,
+    includePersons: true,
+    includeCompanies: false,
+    enableCompanyCreation: false,
+    enablePersonCreation: true,
   },
   schuetzeOverview: {
     enabled: true,

@@ -16,7 +16,7 @@
       <cds-icon shape="angle" direction="down"></cds-icon>{{ 'addCustomer' | translate }}
     </button>
     <clr-dropdown-menu clrPosition="bottom-left" *clrIfOpen>
-      <div
+      <div *ngIf="featureFlags.enablePersonCreation"
         aria-label="Person"
         clrDropdownItem
         style="font-size: 20px"
@@ -25,7 +25,7 @@
       >
         <cds-icon size="md" shape="id-badge"></cds-icon>{{ 'person' | translate }}
       </div>
-      <div
+      <div *ngIf="featureFlags.enableCompanyCreation"
         aria-label="Firma"
         clrDropdownItem
         style="font-size: 20px"
