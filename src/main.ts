@@ -4,6 +4,7 @@ import { AppComponent } from './app/app.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { HttpLoaderFactory } from './app/app.translate-loader';
 import './icons';
+import { provideHttpClient } from '@angular/common/http';
 
 bootstrapApplication(AppComponent, {
   providers: [
@@ -12,7 +13,8 @@ bootstrapApplication(AppComponent, {
       useFactory: HttpLoaderFactory,
       deps: []
     },
-    appConfig.providers
+    appConfig.providers,
+    provideHttpClient()
   ],
 }).catch((err) =>
   console.error(err)
