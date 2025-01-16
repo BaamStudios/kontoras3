@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import {
@@ -19,29 +19,30 @@ import { Contest } from '../../../shared/entities/contest';
 import { Person } from '../../../shared/entities/person';
 import { Shooting } from '../../../shared/entities/shooting';
 //import { BaseChartDirective } from 'ng2-charts';
-
+import { ChartConfiguration, ChartData, ChartEvent } from 'chart.js';
+import { BaseChartDirective } from 'ng2-charts';
 
 @Component({
-    selector: 'app-contest-run',
-    imports: [
-        CommonModule,
-        FormsModule,
-        ClrFormsModule,
-        ClarityModule,
-        ClrCheckboxModule,
-        ClrComboboxModule,
-        ClrRadioModule,
-        ClrTabsModule,
-        TranslateModule, // Add TranslateModule to imports
-        ClrDatepickerModule,
-        ClrModalModule, // Add ClrModalModule to imports,
-        //BaseChartDirective
-    ],
-    templateUrl: './contest-run.component.html',
-    styleUrl: './contest-run.component.scss'
+  selector: 'app-contest-run',
+  imports: [
+    CommonModule,
+    FormsModule,
+    BaseChartDirective,
+    ClrFormsModule,
+    ClarityModule,
+    ClrCheckboxModule,
+    ClrComboboxModule,
+    ClrRadioModule,
+    ClrTabsModule,
+    TranslateModule, // Add TranslateModule to imports
+    ClrDatepickerModule,
+    ClrModalModule, // Add ClrModalModule to imports,
+    //BaseChartDirective
+  ],
+  templateUrl: './contest-run.component.html',
+  styleUrl: './contest-run.component.scss',
 })
 export class ContestRunComponent implements OnInit {
-
   repoContest = remult.repo(Contest);
   repoPerson = remult.repo(Person);
   repoShooting = remult.repo(Shooting);
@@ -51,10 +52,36 @@ export class ContestRunComponent implements OnInit {
   contest?: Contest;
   selectedShooter?: Person;
 
+  @ViewChild(BaseChartDirective) chart: BaseChartDirective<'line'> | undefined;
+
+  public barChartOptions: ChartConfiguration<'line'>['options'] = {
+    // We use these empty structures as placeholders for dynamic theming.
+    scales: {
+      x: {},
+      y: {
+        min: 10,
+      },
+    },
+    plugins: {
+      legend: {
+        display: true,
+      }
+    },
+  };
+  public barChartType = 'bar' as const;
+
+  public barChartData: ChartData<'line'> = {
+    labels: ['2006', '2007', '2008', '2009', '2010', '2011', '2012'],
+    datasets: [
+      { data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A' },
+      { data: [28, 48, 40, 19, 86, 27, 90], label: 'Series B' },
+    ],
+  };
+
   async selectedShooterChanged(shooter: Person) {
     this.selectedShooter = shooter;
     this.reloadResults();
-   }
+  }
   shooters?: Person[];
   shooterResults: any[] = [];
 
@@ -101,16 +128,28 @@ export class ContestRunComponent implements OnInit {
   }
 
   async reloadResults(shooter: Person | undefined = this.selectedShooter) {
-
     if (shooter && this.contest) {
       this.shooterResults = [];
       this.shooterResults = await this.repoShooting.find({
         where: {
           contestId: this.contest.id,
           shooterId: shooter.id,
-        }, orderBy: { shootingDate: 'asc' }
+        },
+        orderBy: { shootingDate: 'asc' },
       });
+
+      this.updateChartData();
+
     }
+  }
+  updateChartData() {
+    this.barChartData = {
+      labels: this.shooterResults.map((r) => r.shootingDate?.toLocaleDateString()),
+      datasets: [
+        { data: this.shooterResults.map((r) => r.points), label: 'Punkte' },
+        { data: this.shooterResults.map((r) => r.rings), label: 'Ringe' },
+      ],
+    };
   }
 
   editShooting(result: Shooting): void {
