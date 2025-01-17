@@ -17,20 +17,20 @@ import {
 import { FieldMetadata, getEntityRef, getValueList } from 'remult';
 
 @Component({
-    selector: 'app-autofield',
-    imports: [
-        CommonModule,
-        FormsModule,
-        ClrFormsModule,
-        ClarityModule,
-        ClrCheckboxModule,
-        ClrComboboxModule,
-        ClrTextareaModule,
-        ClrDatepickerModule
-    ],
-    templateUrl: './autofield.component.html',
-    styleUrl: './autofield.component.scss',
-    viewProviders: [{ provide: ControlContainer, useExisting: NgForm }]
+  selector: 'app-autofield',
+  imports: [
+    CommonModule,
+    FormsModule,
+    ClrFormsModule,
+    ClarityModule,
+    ClrCheckboxModule,
+    ClrComboboxModule,
+    ClrTextareaModule,
+    ClrDatepickerModule,
+  ],
+  templateUrl: './autofield.component.html',
+  styleUrl: './autofield.component.scss',
+  viewProviders: [{ provide: ControlContainer, useExisting: NgForm }],
 })
 export class AutofieldComponent {
   @Input()
@@ -52,13 +52,13 @@ export class AutofieldComponent {
   field!: FieldMetadata;
 
   @Input()
-  helperText: string = "";
+  helperText: string = '';
 
   @Input()
-  label: string = "";
+  label: string = '';
 
   @Input()
-  placeholder: string = "";
+  placeholder: string = '';
 
   constructor(public form: NgForm) {}
 
@@ -73,7 +73,9 @@ export class AutofieldComponent {
     if (result && result.modelState) {
       this.form.form
         .get(this.field.key)
-        ?.setErrors(result?.modelState[this.field.key] as unknown as ValidationErrors);
+        ?.setErrors(
+          result?.modelState[this.field.key] as unknown as ValidationErrors
+        );
     }
   }
 }
