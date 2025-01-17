@@ -1,4 +1,4 @@
-import { Fields, Validators } from 'remult';
+import { Fields, LifecycleEvent, Validators } from 'remult';
 import { Customer } from './customer';
 import { SearchableEntity } from './searchable-entity';
 
@@ -6,7 +6,7 @@ import { SearchableEntity } from './searchable-entity';
   allowApiCrud: true,
   searchFields: ['name', 'customerNumber'],
   deleted: async (company, e) => {
-      await Customer.onDeleted(company,e);
+      await Customer.onDeleted(company,e as LifecycleEvent<Customer>);
   },
   saving: async (entity, event) => {
       if (!entity.customerNumber) {

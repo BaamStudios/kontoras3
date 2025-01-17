@@ -3,7 +3,7 @@
   <span *ngIf="selectedShooter"> von {{ selectedShooter.displayName }} </span>
 </h1>
 <div class="clr-row">
-  <div class="clr-col-6">
+  <div class="clr-col-4">
     <form clrForm #contestForm="ngForm">
       <clr-combobox-container>
         <label>Schütze</label>
@@ -141,10 +141,13 @@
     </form>
 
   </div>
-  <div class="clr-col-6">
+  <div class="clr-col-4">
     <canvas baseChart [data]="barChartData" [options]="barChartOptions" [type]="'line'"> </canvas>
   </div>
+  <div class="clr-col-4">
+    <app-air-rifle-target [shots]=" [{x:2.81, y: -2.75},{x:3.21, y: -3.75},{x:-2.81, y: 1.75}] "></app-air-rifle-target>
 
+  </div>
 </div>
 
 <ng-container *ngIf="this.selectedShooter">
@@ -174,7 +177,6 @@
     <clr-dg-footer>{{ shooterResults.length }} Ergebnisse</clr-dg-footer>
   </clr-datagrid>
 </ng-container>
-
 
 
 <!-- Confirmation Modal -->

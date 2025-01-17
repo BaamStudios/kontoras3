@@ -71,7 +71,7 @@ export class NumberRange extends Base {
   @Fields.string({
     caption: 'Format',
     validate: [
-      (entity) => {
+      (entity: NumberRange) => {
         try {
           entity.formatNextSequenceValue();
         } catch (err) {

@@ -21,7 +21,7 @@ export class PersonViewComponent implements OnInit {
 
   @Input() id!: string;
   repo = remult.repo(Person);
-  entity?: Person;
+  entity?: Person|null;
 
   constructor(private router: Router) {}
 

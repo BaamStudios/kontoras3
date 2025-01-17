@@ -21,7 +21,7 @@ export interface RelationFormValidator {
 export abstract class EditComponent<TEntity extends Base>
   implements OnInit, RelationFormValidator
 {
-  entity?: TEntity;
+  entity?: TEntity|null;
   instance?: any;
 
   abstract rootPath: string;

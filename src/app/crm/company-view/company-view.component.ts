@@ -20,7 +20,7 @@ export class CompanyViewComponent implements OnInit {
 
   @Input() id!: string;
   repo = remult.repo(Company);
-  entity?: Company;
+  entity?: Company | null;
   featureFlags = featureFlags;
 
   constructor(private router: Router) {}

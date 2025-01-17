@@ -36,7 +36,7 @@ export class AddressEditComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnInit(): void {
     if (this.address) {
-      this.fields = getEntityRef(this.address).metadata.fields;
+      this.fields = getEntityRef(this.address).metadata.fields as FieldsMetadata<Address>;
     }
   }
 

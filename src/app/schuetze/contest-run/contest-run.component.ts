@@ -21,6 +21,7 @@ import { Shooting } from '../../../shared/entities/shooting';
 //import { BaseChartDirective } from 'ng2-charts';
 import { ChartConfiguration, ChartData, ChartEvent } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
+import { AirRifleTargetComponent } from '../air-rifle-target/air-rifle-target.component';
 
 @Component({
   selector: 'app-contest-run',
@@ -37,6 +38,7 @@ import { BaseChartDirective } from 'ng2-charts';
     TranslateModule, // Add TranslateModule to imports
     ClrDatepickerModule,
     ClrModalModule, // Add ClrModalModule to imports,
+    AirRifleTargetComponent
     //BaseChartDirective
   ],
   templateUrl: './contest-run.component.html',
@@ -49,7 +51,7 @@ export class ContestRunComponent implements OnInit {
 
   @Input() id!: idType<Contest>;
   fields: any;
-  contest?: Contest;
+  contest?: Contest | null;
   selectedShooter?: Person;
 
   @ViewChild(BaseChartDirective) chart: BaseChartDirective<'line'> | undefined;
@@ -166,4 +168,8 @@ export class ContestRunComponent implements OnInit {
     this.deleteModalOpen = false;
     await this.reloadResults();
   }
+
+
+
+
 }

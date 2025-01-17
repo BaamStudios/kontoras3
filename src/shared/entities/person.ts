@@ -1,4 +1,4 @@
-import { Fields, Validators } from 'remult';
+import { Fields, LifecycleEvent, Validators } from 'remult';
 import { SearchableEntity } from './searchable-entity';
 import { Customer } from './customer';
 
@@ -8,8 +8,8 @@ type SalutationType = (typeof salutations)[number];
 @SearchableEntity(Person, 'persons', {
   allowApiCrud: true,
   searchFields: ['firstname', 'lastname', 'customerNumber','position'],
-  deleted: async (person, e) => {
-    await Customer.onDeleted(person, e);
+  deleted: async (person, e: LifecycleEvent<Person>) => {
+    await Customer.onDeleted(person, e as LifecycleEvent<Customer>);
   },
   saving: async (entity, event) => {
       if (!entity.customerNumber) {

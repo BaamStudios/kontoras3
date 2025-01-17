@@ -33,7 +33,7 @@ export class InvoiceItemEditComponent implements OnInit, OnDestroy, AfterViewIni
 
   ngOnInit(): void {
     if (this.item) {
-      this.fields = getEntityRef(this.item).metadata.fields;
+      this.fields = getEntityRef(this.item).metadata.fields as FieldsMetadata<InvoiceItem>;
     }
   }
 
