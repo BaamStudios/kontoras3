@@ -27,7 +27,7 @@ jobs:
               if: steps.cache-nodemodules.outputs.cache-hit != 'true'
               run: npm ci
 
-            - name: Build
+            - name: Build Linux X64 Binary
               run: npm run build
             - uses: actions/cache@v2
               with:
@@ -39,4 +39,23 @@ jobs:
             - name: Publish Linux
               run: npm run publish-linux
 
-
+            - name: release
+              uses: actions/create-release@v1
+              id: create_release
+              with:
+                draft: false
+                prerelease: false
+                release_name: Release ${{ github.ref }}
+                tag_name: ${{ github.ref }}
+                body_path: CHANGELOG.md
+              env:
+                GITHUB_TOKEN: ${{ github.token }}
+            - name: upload linux artifact
+              uses: actions/upload-release-asset@v1
+              env:
+                GITHUB_TOKEN: ${{ github.token }}
+              with:
+                upload_url: ${{ steps.create_release.outputs.upload_url }}
+                asset_path: published/kontoras3_bin
+                asset_name: kontoras3_bin
+                asset_content_type: application/gzip
