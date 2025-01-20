@@ -10,7 +10,8 @@
     "dev": "ng serve --proxy-config proxy.conf.json --port 6400",
     "dev-node": "tsx watch src/server -- --no-open",
     "publish": "nexe dist/server/index.js -o published/kontoras3.exe -t 20.14.0 -b -r \"dist/kontoras3/browser/**/*\"",
-    "publish-linux": "nexe dist/server/index.js -o published/kontoras3_bin -t linux-x64 -b -r \"dist/kontoras3/browser/**/*\""
+    "publish-linux": "nexe dist/server/index.js -o published/kontoras3_bin -t alpine-x64 -b -r \"dist/kontoras3/browser/**/*\"",
+    "publish-linux2": "npx --package=node-musl musl-env npx nexe --configure=--fully-static --make=-j9 --build --verbose index.js -o published/kontoras3_bin -t alpine-x64 -b -r \"dist/kontoras3/browser/**/*\""
   },
   "private": true,
   "dependencies": {
