@@ -34,7 +34,7 @@ jobs:
               if: steps.cache-nodemodules.outputs.cache-hit != 'true'
               run: npm ci
 
-            - name: Build Linux X64 Binary
+            - name: Build Angular UI
               run: npm run build
             - uses: actions/cache@v2
               with:
@@ -43,8 +43,8 @@ jobs:
                 key: ${{ runner.os }}-nexe-prebuilt-${{ hashFiles('**/package.json') }}
                 restore-keys: |
                   ${{ runner.os }}-nexe-prebuilt-
-            - name: Publish Linux
-              run: npm run publish-linux2
+            - name: Publish Alpine-Linux Binary
+              run: npm run publish-linux
 
             - name: release
               uses: actions/create-release@v1
