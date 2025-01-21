@@ -39,3 +39,11 @@ Kontoras3 – Buchhaltung neu gedacht.
 * Remult
 * Node-Red
 * Clarity Design
+
+
+# Docker
+
+Beispiel zum Ausführen mit docker:
+
+`docker build -t schuetze .`
+`docker run -v "%cd%\data:/app/data" -p 6002:6002 -it schuetze`

@@ -1,5 +1,6 @@
 
 import {Entity, Fields} from 'remult';
+import { repo } from 'remult';
 
 @Entity('user',{
   allowApiCrud: true,
@@ -58,4 +59,19 @@ export class User {
    */
   @Fields.boolean()
   isAdmin = false;
+}
+
+
+export async function bootstrapFirstAdminUser() {
+  //check if user admin exists:
+ const count = await repo(User).count();
+  if (count == 0) {
+    //create admin user
+    let u = new User();
+    u.isAdmin = true;
+    u.name = 'admin';
+    u.updatePassword = 'admin';
+    await repo(User).save(u);
+  }
+
 }
