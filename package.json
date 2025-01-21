@@ -3,15 +3,14 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "node dist/server/index.js",
     "build": "ng build && tsc -p tsconfig.server.json",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "dev": "ng serve --proxy-config proxy.conf.json --port 6400",
     "dev-node": "tsx watch src/server -- --no-open",
     "publish": "nexe dist/server/index.js -o published/kontoras3.exe -t 20.14.0 -b -r \"dist/kontoras3/browser/**/*\"",
-    "publish-linux": "nexe dist/server/index.js -o published/kontoras3_bin -t alpine-x64 -b -r \"dist/kontoras3/browser/**/*\"",
-    "publish-linux2": "npx --package=node-musl musl-env npx nexe --configure=--fully-static --make=-j9 --build --verbose dist/server/index.js -o published/kontoras3_bin -t alpine-x64 -b -r \"dist/kontoras3/browser/**/*\""
+    "publish-linux": "nexe dist/server/index.js -o published/kontoras3_bin -t alpine-x64 -b -r \"dist/kontoras3/browser/**/*\""
   },
   "private": true,
   "dependencies": {
@@ -57,8 +56,10 @@
     "@types/express-session": "^1.18.0",
     "@types/flexsearch": "^0.7.6",
     "@types/jasmine": "~5.1.0",
+    "@types/node": "^22.10.7",
     "@types/open": "^6.2.1",
     "@types/session-file-store": "^1.2.5",
+    "esbuild": "^0.24.2",
     "jasmine-core": "~5.1.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.2.0",

@@ -1,6 +1,9 @@
-FROM debian:latest
-WORKDIR /
-ADD https://github.com/BaamStudios/kontoras3/releases/latest/download/kontoras3_bin /kontoras3_bin
-RUN chmod 777 /kontoras3_bin
+FROM node:current-alpine
+WORKDIR /app
+ADD https://github.com/BaamStudios/kontoras3/releases/latest/download/schuetze.zip /app
+
+RUN apk add --no-cache --upgrade bash && \
+    apk add zip unzip
+
 EXPOSE 6400
 ENTRYPOINT ["/bin/sh"]

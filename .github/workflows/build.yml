@@ -38,7 +38,7 @@ jobs:
               run: npm run build
 
             - name: create release zip
-              run: zip -r release.zip dist run.sh
+              run: zip -r release.zip dist run.sh package.json package-lock.json README.md CHANGELOG.md LICENSE
 
             - name: release
               uses: actions/create-release@v1
