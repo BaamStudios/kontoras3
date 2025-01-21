@@ -6,7 +6,10 @@
     "noEmit": false,
     "outDir": "dist",
     "skipLibCheck": true,
-    "rootDir": "src"
+    "rootDir": "src",
+    "paths": {
+      "flexsearch": ["./node_modules/flexsearch/src/flexsearch.bundle.min.js"]
+    }
   },
   "include": ["src/server/index.ts"]
 }
