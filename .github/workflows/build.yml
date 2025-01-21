@@ -36,15 +36,9 @@ jobs:
 
             - name: Build Angular UI
               run: npm run build
-            - uses: actions/cache@v2
-              with:
-                path: |
-                  /home/runner/.nexe
-                key: ${{ runner.os }}-nexe-prebuilt-${{ hashFiles('**/package.json') }}
-                restore-keys: |
-                  ${{ runner.os }}-nexe-prebuilt-
-            - name: Publish Alpine-Linux Binary
-              run: npm run publish-linux
+
+            - name: create release zip
+              run: zip -r release.zip dist run.sh
 
             - name: release
               uses: actions/create-release@v1
@@ -63,6 +57,6 @@ jobs:
                 GITHUB_TOKEN: ${{ github.token }}
               with:
                 upload_url: ${{ steps.create_release.outputs.upload_url }}
-                asset_path: published/kontoras3_bin
-                asset_name: kontoras3_bin
+                asset_path: release.zip
+                asset_name: schuetze-${{ github.ref }}.zip
                 asset_content_type: application/gzip
