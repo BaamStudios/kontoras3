@@ -70,7 +70,7 @@ export async function bootstrapFirstAdminUser() {
     let u = new User();
     u.isAdmin = true;
     u.name = 'admin';
-    u.updatePassword = 'admin';
+    u.password = await User.hash('admin');
     await repo(User).save(u);
   }
 

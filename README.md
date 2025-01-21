@@ -43,7 +43,7 @@ Kontoras3 – Buchhaltung neu gedacht.
 
 # Docker
 
-Beispiel zum Ausführen mit docker:
+Beispiel zum Ausführen mit docker in der windows cmdline:
 
 `docker build -t schuetze .`
 `docker run -v "%cd%\data:/app/data" -p 6002:6002 -it schuetze`
