@@ -7,6 +7,9 @@ import { provideHttpClient, HttpClient } from '@angular/common/http';
 import { provideToastr } from 'ngx-toastr';
 import { TranslateModule, TranslateLoader, TranslateService } from '@ngx-translate/core';
 import { HttpLoaderFactory } from './app.translate-loader';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { providePrimeNG } from 'primeng/config';
+import Aura from '@primeng/themes/aura';
 
 export function initializeTranslations(translate: TranslateService) {
   return () => {
@@ -34,6 +37,12 @@ export const appConfig: ApplicationConfig = {
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes, withComponentInputBinding()),
     provideAnimations(),
+    provideAnimationsAsync(),
+        providePrimeNG({
+            theme: {
+                preset: Aura
+            }
+        }),
     provideToastr(),
     importProvidersFrom(
       TranslateModule.forRoot({
