@@ -2,30 +2,27 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import {
-  ClarityModule,
-  ClrComboboxModule,
-  ClrDatagridModule,
-  ClrDatagridSortOrder,
-  ClrDropdownModule,
-} from '@clr/angular';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
 import { remult } from 'remult';
 import { Invoice } from '../../shared/entities/invoice';
 import { featureFlags } from '../feature-flags';
+import { TableModule } from 'primeng/table';
+import { TooltipModule } from 'primeng/tooltip';
+import { ButtonModule } from 'primeng/button';
+import { CardModule } from 'primeng/card';
 
 @Component({
   selector: 'app-om',
   imports: [
     CommonModule,
     FormsModule,
-    ClarityModule,
-    ClrComboboxModule,
-    ClrDatagridModule,
+    TableModule,
+    TooltipModule,
+    ButtonModule,
     RouterLink,
-    ClrDropdownModule,
     TranslateModule,
+    CardModule
   ],
   templateUrl: './om.component.html',
   styleUrl: './om.component.scss',
@@ -35,7 +32,7 @@ export class OmComponent implements OnInit {
   invoices: Invoice[] = [];
   featureFlags = featureFlags.omOverview;
 
-  sortOrder: ClrDatagridSortOrder = ClrDatagridSortOrder.DESC;
+  sortOrder: number = -1; // PrimeNG uses number for sort order
   constructor(
     private router: Router,
     private translate: TranslateService,
