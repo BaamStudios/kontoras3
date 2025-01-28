@@ -1,53 +1,51 @@
 <ng-container *ngIf="entity">
-  <div cds-layout="horizontal gap:md align:left">
+  <div style="display: flex; justify-content: space-between; align-items: center;">
     <h1>{{ "invoice" | translate }} {{ entity.displayName }}</h1>
 
-    <div cds-layout="align:right align:vertical-center">
+    <div style="display: flex; gap: 10px;">
       <button
+        pButton
         type="button"
-        class="btn btn-icon btn-outline"
-        aria-label="delete-invoice"
+        label="{{ 'overview' | translate }}"
+        icon="pi pi-list"
+        class="p-button-outlined"
         [routerLink]="['/om/invoice']"
-      >
-        {{ "overview" | translate }}
-        <cds-icon shape="view-list"></cds-icon>
-      </button>
+      ></button>
       <button
+        pButton
         type="button"
-        class="btn btn-icon btn-danger"
-        aria-label="delete-invoice"
+        label="{{ 'deleteInvoice' | translate }}"
+        icon="pi pi-trash"
+        class="p-button-outlined p-button-danger"
         (click)="confirmDelete()"
-      >
-        {{ "deleteInvoice" | translate }}
-        <cds-icon shape="trash"></cds-icon>
-      </button>
-      <a
-        [routerLink]="['./edit']"
+      ></button>
+      <button
+        pButton
         type="button"
-        class="btn btn-icon btn-primary"
-        aria-label="add-invoice"
-      >
-        {{ "editInvoice" | translate }}
-        <cds-icon shape="pencil"></cds-icon>
-      </a>
+        label="{{ 'editInvoice' | translate }}"
+        icon="pi pi-pencil"
+        class="p-button-primary"
+        [routerLink]="['./edit']"
+      ></button>
     </div>
   </div>
 
-  <main>
+  <p-card>
     <pdf-viewer
       [src]="'/api/invoice/pdf?id=' + entity.id"
       [autoresize]="false"
       [fit-to-page]="true"
       style="height: 1200px"
     ></pdf-viewer>
-  </main>
+  </p-card>
 
-  <clr-modal
-    [(clrModalOpen)]="showConfirmDeleteModal"
-    [clrModalStaticBackdrop]="false"
+  <p-dialog
+    header="{{ 'deleteInvoice' | translate }}"
+    [(visible)]="showConfirmDeleteModal"
+    [modal]="true"
+    [closable]="false"
   >
-    <h3 class="modal-title">{{ "deleteInvoice" | translate }}</h3>
-    <div class="modal-body">
+    <div>
       <b>{{ "warning" | translate }}</b>
       <p>
         {{
@@ -56,17 +54,21 @@
         }}
       </p>
     </div>
-    <div class="modal-footer">
+    <div class="p-dialog-footer">
       <button
+        pButton
         type="button"
-        class="btn btn-outline"
+        label="{{ 'no' | translate }}"
+        class="p-button-outlined"
         (click)="showConfirmDeleteModal = false"
-      >
-        {{ "no" | translate }}
-      </button>
-      <button type="button" class="btn btn-danger" (click)="delete()">
-        {{ "yes" | translate }}
-      </button>
+      ></button>
+      <button
+        pButton
+        type="button"
+        label="{{ 'yes' | translate }}"
+        class="p-button-danger"
+        (click)="delete()"
+      ></button>
     </div>
-  </clr-modal>
+  </p-dialog>
 </ng-container>

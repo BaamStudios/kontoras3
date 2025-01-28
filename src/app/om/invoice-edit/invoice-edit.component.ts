@@ -2,37 +2,28 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import {
-  ClarityModule,
-  ClrButtonGroup,
-  ClrButtonGroupModule,
-  ClrCheckboxModule,
-  ClrComboboxModule,
-  ClrFormsModule,
-  ClrTabsModule,
-} from '@clr/angular';
-import { TranslateModule } from '@ngx-translate/core'; // Import TranslateModule
+import { TranslateModule } from '@ngx-translate/core';
 import { remult } from 'remult';
 import { Invoice } from '../../../shared/entities/invoice';
 import { AutofieldComponent } from '../../core/autofield/autofield.component';
 import { EditComponent } from '../../core/edit/edit.component';
 import { InvoiceItemEditComponent } from '../invoice-item/invoice-item-edit.component';
+import { ButtonModule } from 'primeng/button';
+import { CardModule } from 'primeng/card';
+import { RadioButtonModule } from 'primeng/radiobutton';
 
 @Component({
   selector: 'app-invoice-editor',
   imports: [
     CommonModule,
     FormsModule,
-    ClrFormsModule,
-    ClarityModule,
-    ClrCheckboxModule,
-    ClrComboboxModule,
     AutofieldComponent,
     RouterLink,
-    ClrTabsModule,
-    ClrButtonGroupModule,
     InvoiceItemEditComponent,
-    TranslateModule, // Add TranslateModule to imports
+    TranslateModule,
+    ButtonModule,
+    CardModule,
+    RadioButtonModule,
   ],
   templateUrl: './invoice-edit.component.html',
   styleUrl: './invoice-edit.component.scss',

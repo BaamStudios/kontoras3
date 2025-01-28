@@ -1,34 +1,36 @@
 <ng-container *ngIf="entity">
-  <div cds-layout="horizontal gap:md align:left">
+  <div
+    style="display: flex; justify-content: space-between; align-items: center"
+  >
     <h1>{{ (entity.id ? "editInvoice" : "createInvoice") | translate }}</h1>
 
-    <div cds-layout="align:right align:vertical-center">
+    <div style="display: flex; gap: 10px">
       <button
+        pButton
         [routerLink]="
           entity.id ? ['/om/invoice', entity.id.toString()] : ['/om/invoice']
         "
         type="button"
-        class="btn btn-icon btn-outline"
+        label="{{ (entity.id ? 'discardChanges' : 'cancel') | translate }}"
+        icon="pi pi-undo"
+        class="p-button-outlined"
         aria-label="cancel-edit-invoice"
-      >
-        <cds-icon shape="undo"></cds-icon
-        >{{ (entity.id ? "discardChanges" : "cancel") | translate }}
-      </button>
+      ></button>
       <button
+        pButton
         (click)="saveChanges()"
         [disabled]="form?.form?.invalid"
         type="button"
-        class="btn btn-icon btn-success"
+        label="{{ (entity.id ? 'saveChanges' : 'createInvoice') | translate }}"
+        icon="pi pi-save"
+        class="p-button-raised p-button-success"
         aria-label="save-invoice"
-      >
-        <cds-icon shape="floppy"></cds-icon
-        >{{ (entity.id ? "saveChanges" : "createInvoice") | translate }}
-      </button>
+      ></button>
     </div>
   </div>
 
-  <main>
-    <form #form="ngForm" clrForm clrLayout="horizontal">
+  <p-card>
+    <form #form="ngForm">
       <h3>{{ "contactAndBillingInfo" | translate }}</h3>
       <app-autofield
         [field]="fields.address!"
@@ -70,24 +72,24 @@
 
       <div class="btn-group">
         <div class="radio btn">
-          <input
-            type="radio"
-            name="btn-group-demo-radios"
-            id="btn-demo-radio-1"
-            (click)="setVatType('Netto')"
-            [checked]="entity.vatType === 'Netto'"
-          />
-          <label for="btn-demo-radio-1">Netto</label>
+          <p-radiobutton
+            name="vatType"
+            inputId="netto"
+            value="Netto"
+            [(ngModel)]="entity.vatType"
+            label="Netto"
+          ></p-radiobutton>
+          <label for="netto" class="ml-2">Netto</label>
         </div>
         <div class="radio btn">
-          <input
-            type="radio"
-            name="btn-group-demo-radios"
-            id="btn-demo-radio-2"
-            (click)="setVatType('Brutto')"
-            [checked]="entity.vatType === 'Brutto'"
-          />
-          <label for="btn-demo-radio-2">Brutto</label>
+          <p-radiobutton
+            inputId="brutto"
+            name="vatType"
+            value="Brutto"
+            [(ngModel)]="entity.vatType"
+            label="Brutto"
+          ></p-radiobutton>
+          <label for="brutto" class="ml-2">Brutto</label>
         </div>
       </div>
 
@@ -117,15 +119,14 @@
       </div>
 
       <button
-        cds-layout="m-t:md"
+        pButton
         (click)="createRelationItem('items')"
         type="button"
-        class="btn btn-outline"
+        label="{{ 'addInvoicePosition' | translate }}"
+        icon="pi pi-plus"
+        class="p-button-outlined"
         aria-label="add-item"
-      >
-        <cds-icon shape="plus"></cds-icon>
-        {{ "addInvoicePosition" | translate }}
-      </button>
+      ></button>
       <h3>{{ "footerText" | translate }}</h3>
       <app-autofield
         [field]="fields.footerText"
@@ -133,5 +134,5 @@
         rows="5"
       ></app-autofield>
     </form>
-  </main>
+  </p-card>
 </ng-container>
