@@ -3,30 +3,13 @@
 @use './styles/layout/layout.scss';
 @use 'primeicons/primeicons.css';
 
-//@use './assets/demo/demo.scss';
+@layer tailwind-base, primeng, tailwind-utilities;
 
-
-
-// html {
-//   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
-//     Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-// }
-
-// body {
-//   margin: 0;
-//   padding: 2rem;
-//   min-height: 100%;
-//   overflow-x: hidden;
-//   overflow-y: auto;
-//   font-weight: normal;
-//   -webkit-font-smoothing: antialiased;
-//   -moz-osx-font-smoothing: grayscale;
-//   background: light-dark(var(--p-surface-0), var(--p-surface-950));
-// }
-
-
-#profileMenu .p-submenu-list {
-  right: 100%;
-  left: unset;
+@layer tailwind-base {
+@tailwind base;
 }
 
+@layer tailwind-utilities {
+@tailwind components;
+@tailwind utilities;
+}

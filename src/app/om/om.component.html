@@ -1,20 +1,14 @@
-<p-button
-[label]="'createInvoice' | translate"
-icon="pi pi-plus"
-[raised]="true"
-[routerLink]="['/om/invoice', 'new', 'edit']"
->
-</p-button>
+<div class="mb-5 w-100 flex justify-end">
+  <p-button
+    [label]="'createInvoice' | translate"
+    icon="pi pi-plus"
+    [raised]="true"
+    [routerLink]="['/om/invoice', 'new', 'edit']"
+  >
+  </p-button>
+</div>
 
 <p-card [header]="'invoiceOverview' | translate">
-  <p>
-    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed
-    consequuntur error repudiandae numquam deserunt quisquam repellat libero
-    asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate
-    neque quas!
-  </p>
-
-
   <p-table [value]="invoices" [sortField]="'createdAt'" [sortOrder]="sortOrder">
     <ng-template pTemplate="header">
       <tr>
