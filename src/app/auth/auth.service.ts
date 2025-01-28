@@ -46,7 +46,7 @@ export class AuthService {
       this.errorService.handleError(err);
     } finally {
       this.remult.user = undefined;
-      await this.router.navigate(['/login']);
+      await this.router.navigate(['/auth/login']);
     }
   }
 

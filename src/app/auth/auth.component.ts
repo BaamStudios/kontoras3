@@ -5,6 +5,7 @@ import { ClrCheckboxModule, ClrDropdownModule, ClrInputModule, ClrPasswordModule
 import { AuthService } from './auth.service';
 import {} from '@angular/common/http';
 import { ErrorService } from '../error.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-auth',

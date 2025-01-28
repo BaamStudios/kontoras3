@@ -1,18 +1,14 @@
 import { CommonModule } from '@angular/common';
+import { } from '@angular/common/http';
 import { Component, Inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { ClarityModule } from "@clr/angular";
-import { AuthService } from './auth/auth.service';
-import { HeadComponent } from './head/head.component';
-import { NavigationComponent } from './navigation/navigation.component';
 import { TranslateModule } from '@ngx-translate/core';
-import {} from '@angular/common/http';
+import { AuthService } from './auth/auth.service';
 
 @Component({
     selector: 'app-root',
-    imports: [CommonModule, RouterOutlet, ClarityModule, HeadComponent, NavigationComponent, TranslateModule],
-    templateUrl: './app.component.html',
-    styleUrls: ['./app.component.scss']
+    imports: [CommonModule, RouterOutlet, TranslateModule],
+    templateUrl: './app.component.html'
 })
 export class AppComponent {
 

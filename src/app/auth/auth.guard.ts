@@ -4,6 +4,6 @@ import { remult } from 'remult';
 
 export const authGuard: CanActivateFn = (route, state) => {
   if (remult.authenticated()) return true;
-  inject(Router).navigate(['/login']);
+  inject(Router).navigate(['/auth/login']);
   return false;
 };

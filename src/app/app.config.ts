@@ -1,24 +1,23 @@
+import { HttpClient, provideHttpClient, withFetch } from '@angular/common/http';
 import {
   APP_INITIALIZER,
   ApplicationConfig,
   importProvidersFrom,
   provideZoneChangeDetection,
 } from '@angular/core';
-import { provideRouter, withComponentInputBinding } from '@angular/router';
-import { routes } from './app.routes';
-import { provideAnimations } from '@angular/platform-browser/animations';
-import { AuthService } from './auth/auth.service';
-import { provideHttpClient, HttpClient } from '@angular/common/http';
-import { provideToastr } from 'ngx-toastr';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { provideRouter, withComponentInputBinding, withEnabledBlockingInitialNavigation, withInMemoryScrolling } from '@angular/router';
 import {
-  TranslateModule,
   TranslateLoader,
+  TranslateModule,
   TranslateService,
 } from '@ngx-translate/core';
-import { HttpLoaderFactory } from './app.translate-loader';
-import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { providePrimeNG } from 'primeng/config';
 import Aura from '@primeng/themes/aura';
+import { provideToastr } from 'ngx-toastr';
+import { providePrimeNG } from 'primeng/config';
+import { routes } from './app.routes';
+import { HttpLoaderFactory } from './app.translate-loader';
+import { AuthService } from './auth/auth.service';
 
 export function initializeTranslations(translate: TranslateService) {
   return () => {
@@ -30,7 +29,7 @@ export function initializeTranslations(translate: TranslateService) {
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideHttpClient(),
+    provideHttpClient(withFetch()),
     {
       provide: APP_INITIALIZER,
       useFactory: (authService: AuthService) => authService.checkUser(),
@@ -43,16 +42,20 @@ export const appConfig: ApplicationConfig = {
       deps: [TranslateService],
       multi: true,
     },
+    provideToastr(),
     provideZoneChangeDetection({ eventCoalescing: true }),
-    provideRouter(routes, withComponentInputBinding()),
-    //provideAnimations(),
+    provideRouter(routes, withComponentInputBinding(), withInMemoryScrolling({ anchorScrolling: 'enabled', scrollPositionRestoration: 'enabled' }), withEnabledBlockingInitialNavigation()),
     provideAnimationsAsync(),
     providePrimeNG({
       theme: {
-        preset: Aura
+        preset: Aura,
+        options: {
+          prefix: 'p',
+          darkModeSelector: '.app-dark',
+          cssLayer: true
+      }
       },
     }),
-    provideToastr(),
     importProvidersFrom(
       TranslateModule.forRoot({
         loader: {
