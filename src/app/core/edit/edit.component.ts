@@ -13,15 +13,15 @@ export interface RelationFormValidator {
 }
 
 @Component({
-    selector: 'app-edit',
-    imports: [],
-    templateUrl: './edit.component.html',
-    styleUrl: './edit.component.scss'
+  selector: 'app-edit',
+  imports: [],
+  template: '',
+  styleUrl: './edit.component.scss',
 })
 export abstract class EditComponent<TEntity extends Base>
   implements OnInit, RelationFormValidator
 {
-  entity?: TEntity|null;
+  entity?: TEntity | null;
   instance?: any;
 
   abstract rootPath: string;
@@ -61,12 +61,9 @@ export abstract class EditComponent<TEntity extends Base>
       this.deleteList = [];
       this.entity = await this.saveRelations(this.repo, this.entity);
     }
-    if(this.returnWithEntityId)
-    {
-    this.router.navigate([this.rootPath, this.entity!.id]);
-    }
-    else
-    {
+    if (this.returnWithEntityId) {
+      this.router.navigate([this.rootPath, this.entity!.id]);
+    } else {
       this.router.navigate([this.rootPath]);
     }
   }

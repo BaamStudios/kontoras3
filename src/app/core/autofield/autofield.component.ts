@@ -6,27 +6,32 @@ import {
   NgForm,
   ValidationErrors,
 } from '@angular/forms';
-import {
-  ClarityModule,
-  ClrCheckboxModule,
-  ClrComboboxModule,
-  ClrDatepickerModule,
-  ClrFormsModule,
-  ClrTextareaModule,
-} from '@clr/angular';
 import { FieldMetadata, getEntityRef, getValueList } from 'remult';
-
+import { CheckboxModule } from 'primeng/checkbox';
+import { InputTextModule } from 'primeng/inputtext';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { CalendarModule } from 'primeng/calendar';
+import { MessageModule } from 'primeng/message';
+import { TextareaModule } from 'primeng/textarea';
+import { InputGroupModule } from 'primeng/inputgroup';
+import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
+import { IftaLabelModule } from 'primeng/iftalabel';
+import { SelectModule } from 'primeng/select';
 @Component({
   selector: 'app-autofield',
   imports: [
     CommonModule,
     FormsModule,
-    ClrFormsModule,
-    ClarityModule,
-    ClrCheckboxModule,
-    ClrComboboxModule,
-    ClrTextareaModule,
-    ClrDatepickerModule,
+    CheckboxModule,
+    InputTextModule,
+    InputNumberModule,
+    CalendarModule,
+    MessageModule,
+    TextareaModule,
+    InputGroupModule,
+    InputGroupAddonModule,
+    IftaLabelModule,
+    SelectModule,
   ],
   templateUrl: './autofield.component.html',
   styleUrl: './autofield.component.scss',

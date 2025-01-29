@@ -1,108 +1,84 @@
-<clr-checkbox-container *ngIf="field.inputType === 'checkbox'">
-  <label *ngIf="showLabel">{{ label || field.caption }}</label>
-  <clr-checkbox-wrapper>
-    <input
-      type="checkbox"
-      clrCheckbox
-      (blur)="onBlur($event)"
+<p-iftalabel class="mb-4" [ngStyle]="{ width: width }">
+  <div class="flex flex-col gap-1">
+    <p-checkbox
+      *ngIf="field.inputType === 'checkbox'"
+      binary="true"
+      pSize="large"
       [(ngModel)]="entity[field.key]"
       [name]="field.key"
-      [ngStyle]="{ width: width }"
+      [inputId]="field.key"
+      [attr.aria-describedby]="helperText ? field.key + '-help' : undefined"
+    ></p-checkbox>
+
+    <input
+      *ngIf="field.inputType === undefined"
+      pInputText
+      pSize="large"
+      [(ngModel)]="entity[field.key]"
+      [name]="field.key"
       [placeholder]="placeholder"
+      (blur)="onBlur($event)"
+      [id]="field.key"
+      [attr.aria-describedby]="helperText ? field.key + '-help' : undefined"
     />
-  </clr-checkbox-wrapper>
-  <clr-control-error>{{ form.form.get(field.key)?.errors }}</clr-control-error>
-  <clr-control-helper
-    *ngIf="helperText"
-    [innerHTML]="helperText"
-  ></clr-control-helper>
-</clr-checkbox-container>
 
-<clr-input-container *ngIf="field.inputType === undefined">
-  <label *ngIf="showLabel">{{ label || field.caption }}</label>
-  <input
-    clrInput
-    type="text"
-    (blur)="onBlur($event)"
-    [(ngModel)]="entity[field.key]"
-    [name]="field.key"
-    [attr.name]="field.key"
-    [ngStyle]="{ width: width }"
-    [placeholder]="placeholder"
-  />
-  <clr-control-error>{{ form.form.get(field.key)?.errors }}</clr-control-error>
-  <clr-control-helper
-    *ngIf="helperText"
-    [innerHTML]="helperText"
-  ></clr-control-helper>
-</clr-input-container>
+    <textarea
+      *ngIf="field.inputType === 'multiline'"
+      pTextarea
+      pSize="large"
+      [(ngModel)]="entity[field.key]"
+      [name]="field.key"
+      [rows]="rows"
+      [placeholder]="placeholder"
+      (blur)="onBlur($event)"
+      [id]="field.key"
+      [attr.aria-describedby]="helperText ? field.key + '-help' : undefined"
+    ></textarea>
 
-<clr-textarea-container *ngIf="field.inputType === 'multiline'">
-  <label *ngIf="showLabel">{{ label || field.caption }}</label>
-  <textarea
-    clrTextarea
-    type="text"
-    (blur)="onBlur($event)"
-    [(ngModel)]="entity[field.key]"
-    [name]="field.key"
-    [attr.name]="field.key"
-    [attr.rows]="rows"
-    [ngStyle]="{ width: width }"
-    [placeholder]="placeholder"
-  ></textarea>
-  <clr-control-error>{{ form.form.get(field.key)?.errors }}</clr-control-error>
-  <clr-control-helper
-    *ngIf="helperText"
-    [innerHTML]="helperText"
-  ></clr-control-helper>
-</clr-textarea-container>
+    <p-inputNumber
+      *ngIf="field.inputType === 'number'"
+      pSize="large"
+      [(ngModel)]="entity[field.key]"
+      [name]="field.key"
+      [placeholder]="placeholder"
+      (blur)="onBlur($event)"
+      [inputId]="field.key"
+      [attr.aria-describedby]="helperText ? field.key + '-help' : undefined"
+    ></p-inputNumber>
 
-<clr-input-container *ngIf="field.inputType === 'number'">
-  <label *ngIf="showLabel">{{ label || field.caption }}</label>
-  <input
-    clrInput
-    type="number"
-    (blur)="onBlur($event)"
-    [(ngModel)]="entity[field.key]"
-    [name]="field.key"
-    [attr.name]="field.key"
-    [ngStyle]="{ width: width }"
-    [placeholder]="placeholder"
-  />
-  <clr-control-error>{{ form.form.get(field.key)?.errors }}</clr-control-error>
-  <clr-control-helper
-    *ngIf="helperText"
-    [innerHTML]="helperText"
-  ></clr-control-helper>
-</clr-input-container>
+    <p-select
+      *ngIf="field.inputType === 'select-literal'"
+      pSize="large"
+      [(ngModel)]="entity[field.key]"
+      [name]="field.key"
+      [options]="getOptionValues(field.key)"
+      (blur)="onBlur($event)"
+      [inputId]="field.key"
+      styleClass="w-full"
+      [attr.aria-describedby]="helperText ? field.key + '-help' : undefined"
+    />
 
-<clr-select-container *ngIf="field.inputType === 'select-literal'">
-  <label *ngIf="showLabel">{{ label || field.caption }}</label>
-  <select
-    clrSelect
-    [name]="field.key"
-    (blur)="onBlur($event)"
-    [(ngModel)]="entity[field.key]"
-    [ngStyle]="{ width: width }"
-  >
-    <option *ngIf="field.options.allowNull" [ngValue]="null"></option>
-    <option *ngFor="let value of getOptionValues(field.key)" [ngValue]="value">
-      {{ value }}
-    </option>
-  </select>
-  <clr-control-error>{{ form.form.get(field.key)?.errors }}</clr-control-error>
-  <clr-control-helper *ngIf="helperText">{{ helperText }}</clr-control-helper>
-</clr-select-container>
+    <p-calendar
+      *ngIf="field.inputType === 'date'"
+      pSize="large"
+      [(ngModel)]="entity[field.key]"
+      [name]="field.key"
+      (blur)="onBlur($event)"
+      [inputId]="field.key"
+      [attr.aria-describedby]="helperText ? field.key + '-help' : undefined"
+    ></p-calendar>
 
-<clr-date-container *ngIf="field.inputType === 'date'">
-  <label *ngIf="showLabel">{{ label || field.caption }}</label>
-  <input
-    type="date"
-    autocomplete="off"
-    clrDate
-    [(clrDate)]="entity[field.key]"
-    [ngStyle]="{ width: width }"
-    [name]="field.key"
-    (blur)="onBlur($event)"
-  />
-</clr-date-container>
+    <p-message
+      *ngIf="form.form.get(field.key)?.errors"
+      severity="error"
+      text="{{ form.form.get(field.key)?.errors }}"
+      variant="simple"
+      size="small"
+    ></p-message>
+    <small *ngIf="helperText" [id]="field.key + '-help'">{{
+      helperText
+    }}</small>
+
+    <label [for]="field.key">{{ label || field.caption }}</label>
+  </div>
+</p-iftalabel>
