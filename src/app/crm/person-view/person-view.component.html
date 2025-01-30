@@ -65,15 +65,14 @@
     [modal]="true"
     [style]="{ width: '450px' }"
   >
-    <div class="confirmation-content">
-      <b>{{ "warning" | translate }}</b>
-      <p>
-        {{
-          "confirmDeletePerson"
+    <div class="flex flex-column gap-3">
+      <p
+        [innerHTML]="
+          'confirmDeletePerson'
             | translate
               : { firstname: entity.firstname, lastname: entity.lastname }
-        }}
-      </p>
+        "
+      ></p>
     </div>
     <ng-template pTemplate="footer">
       <p-button

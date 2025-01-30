@@ -36,35 +36,31 @@
   </p-card>
 
   <p-dialog
-    header="{{ 'deleteInvoice' | translate }}"
     [(visible)]="showConfirmDeleteModal"
+    [header]="'deleteInvoice' | translate"
     [modal]="true"
-    [closable]="false"
+    [style]="{ width: '450px' }"
   >
-    <div>
-      <b>{{ "warning" | translate }}</b>
-      <p>
-        {{
-          "confirmDeleteInvoice"
+    <div class="flex flex-column gap-3">
+      <p
+        [innerHTML]="
+          'confirmDeleteInvoice'
             | translate : { displayName: entity.displayName }
-        }}
-      </p>
+        "
+      ></p>
     </div>
-    <div class="p-dialog-footer">
-      <button
-        pButton
-        type="button"
-        label="{{ 'no' | translate }}"
-        class="p-button-outlined"
+    <ng-template pTemplate="footer">
+      <p-button
         (click)="showConfirmDeleteModal = false"
-      ></button>
-      <button
-        pButton
-        type="button"
-        label="{{ 'yes' | translate }}"
-        class="p-button-danger"
+        [label]="'no' | translate"
+        severity="secondary"
+        styleClass="p-button-text"
+      ></p-button>
+      <p-button
         (click)="delete()"
-      ></button>
-    </div>
+        [label]="'yes' | translate"
+        severity="danger"
+      ></p-button>
+    </ng-template>
   </p-dialog>
 </ng-container>
