@@ -1,6 +1,6 @@
 <ng-container *ngIf="entity">
   <div class="flex justify-between align-items-center mb-3">
-    <h1>{{ "editCompany" | translate }}</h1>
+    <h1>{{ (entity.id ? "editCompany" : "createCompany") | translate }}</h1>
 
     <div class="flex gap-2">
       <p-button
@@ -9,7 +9,7 @@
         "
         icon="pi pi-undo"
         class="whitespace-nowrap"
-        [label]="'discardChanges' | translate"
+        [label]="(entity.id ? 'discardChanges' : 'cancel') | translate"
         severity="secondary"
       ></p-button>
       <p-button
@@ -17,7 +17,7 @@
         [disabled]="form?.form?.invalid || hasInvalidForms()"
         icon="pi pi-save"
         class="whitespace-nowrap"
-        [label]="'saveChanges' | translate"
+        [label]="(entity.id ? 'saveChanges' : 'createCompany') | translate"
         severity="success"
       ></p-button>
     </div>
