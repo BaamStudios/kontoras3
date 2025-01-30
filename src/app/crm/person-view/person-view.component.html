@@ -1,86 +1,91 @@
 <ng-container *ngIf="entity">
-  <div cds-layout="horizontal gap:md align:left">
-    <h1>{{ 'person' | translate }}: {{ entity.displayName }}</h1>
+  <div class="flex justify-between align-items-center mb-3">
+    <h1>{{ "person" | translate }}: {{ entity.displayName }}</h1>
 
-    <div cds-layout="align:right align:vertical-center">
-      <button
-        type="button"
-        class="btn btn-icon btn-outline"
-        aria-label="delete-person"
+    <div class="flex gap-2">
+      <p-button
         [routerLink]="['/crm/overview']"
-      >
-        {{ 'overview' | translate }}
-        <cds-icon shape="view-list"></cds-icon>
-      </button>
-      <button
-        type="button"
-        class="btn btn-icon btn-danger"
-        aria-label="delete-person"
+        icon="pi pi-list"
+        class="whitespace-nowrap"
+        [label]="'overview' | translate"
+        severity="secondary"
+      ></p-button>
+      <p-button
         (click)="confirmDelete()"
-      >
-        {{ 'deleteCustomer' | translate }}
-        <cds-icon shape="trash"></cds-icon>
-      </button>
-      <a
+        icon="pi pi-trash"
+        class="whitespace-nowrap"
+        [label]="'deleteCustomer' | translate"
+        severity="danger"
+      ></p-button>
+      <p-button
         [routerLink]="['./edit']"
-        type="button"
-        class="btn btn-icon btn-primary"
-        aria-label="add-person"
-      >
-        {{ 'editCustomer' | translate }}
-        <cds-icon shape="pencil"></cds-icon>
-      </a>
+        icon="pi pi-pencil"
+        class="whitespace-nowrap"
+        [label]="'editCustomer' | translate"
+      ></p-button>
     </div>
   </div>
 
-  <main>
-    <table class="table table-vertical">
-      <tbody>
+  <div class="card">
+    <p-table [value]="[entity]" [tableStyle]="{ 'min-width': '50rem' }">
+      <ng-template pTemplate="body" let-item>
         <tr *ngIf="featureFlags.personView.showPerson">
-          <th>{{ 'person' | translate }}</th>
-          <td>{{entity.salutation}} {{entity.firstname}} {{entity.lastname}} </td>
+          <th>{{ "person" | translate }}</th>
+          <td>
+            {{ item.salutation }} {{ item.firstname }} {{ item.lastname }}
+          </td>
         </tr>
         <tr *ngIf="featureFlags.personView.showCustomerNumber">
-          <th>{{ 'customerNumber' | translate }}</th>
-          <td>{{entity.customerNumber}}</td>
+          <th>{{ "customerNumber" | translate }}</th>
+          <td>{{ item.customerNumber }}</td>
         </tr>
         <tr *ngIf="featureFlags.personView.showCreatedAt">
-          <th>{{ 'createdAt' | translate }}</th>
-          <td>{{ entity.createdAt | date : 'medium' }} Uhr</td>
+          <th>{{ "createdAt" | translate }}</th>
+          <td>{{ item.createdAt | date : "medium" }}</td>
         </tr>
         <tr *ngIf="featureFlags.personView.showBirthdate">
-          <th>{{ 'birthdate' | translate }}</th>
-          <td>{{ entity.birthdate | date : 'mediumDate' }}</td>
+          <th>{{ "birthdate" | translate }}</th>
+          <td>{{ item.birthdate | date : "mediumDate" }}</td>
         </tr>
-      </tbody>
-    </table>
-    <ng-container *ngIf="featureFlags.personView.showAddresses">
-      <app-address-view *ngFor="let address of entity.addresses" [address]="address" [entity]="entity"></app-address-view>
-    </ng-container>
-  </main>
+      </ng-template>
+    </p-table>
+  </div>
 
-  <clr-modal
-    [(clrModalOpen)]="showConfirmDeleteModal"
-    [clrModalStaticBackdrop]="false"
+  <ng-container *ngIf="featureFlags.personView.showAddresses">
+    <app-address-view
+      *ngFor="let address of entity.addresses"
+      [address]="address"
+      [entity]="entity"
+    ></app-address-view>
+  </ng-container>
+
+  <p-dialog
+    [(visible)]="showConfirmDeleteModal"
+    [header]="'deleteCustomer' | translate"
+    [modal]="true"
+    [style]="{ width: '450px' }"
   >
-    <h3 class="modal-title">{{ 'deleteCustomer' | translate }}</h3>
-    <div class="modal-body">
-      <b>{{ 'warning' | translate }}</b>
-      <p>
-        {{ 'confirmDeletePerson' | translate: { firstname: entity.firstname, lastname: entity.lastname } }}
-      </p>
+    <div class="flex flex-column gap-3">
+      <p
+        [innerHTML]="
+          'confirmDeletePerson'
+            | translate
+              : { firstname: entity.firstname, lastname: entity.lastname }
+        "
+      ></p>
     </div>
-    <div class="modal-footer">
-      <button
-        type="button"
-        class="btn btn-outline"
+    <ng-template pTemplate="footer">
+      <p-button
         (click)="showConfirmDeleteModal = false"
-      >
-        {{ 'no' | translate }}
-      </button>
-      <button type="button" class="btn btn-danger" (click)="delete()">
-        {{ 'yes' | translate }}
-      </button>
-    </div>
-  </clr-modal>
+        [label]="'no' | translate"
+        severity="secondary"
+        styleClass="p-button-text"
+      ></p-button>
+      <p-button
+        (click)="delete()"
+        [label]="'yes' | translate"
+        severity="danger"
+      ></p-button>
+    </ng-template>
+  </p-dialog>
 </ng-container>

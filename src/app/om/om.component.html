@@ -9,7 +9,14 @@
 </div>
 
 <p-card [header]="'invoiceOverview' | translate">
-  <p-table [value]="invoices" [sortField]="'createdAt'" [sortOrder]="sortOrder">
+  <p-table
+    [value]="invoices"
+    [rowHover]="true"
+    (onRowSelect)="openInvoice($event.data)"
+    selectionMode="single"
+    [sortField]="'createdAt'"
+    [sortOrder]="sortOrder"
+  >
     <ng-template pTemplate="header">
       <tr>
         <th *ngIf="featureFlags.showIdColumn" style="width: 20px">
@@ -33,7 +40,7 @@
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-invoice>
-      <tr (click)="openInvoice(invoice)">
+      <tr [pSelectableRow]="invoice">
         <td *ngIf="featureFlags.showIdColumn" style="width: 20px">
           <i
             class="pi pi-list"

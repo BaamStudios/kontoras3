@@ -13,7 +13,6 @@
 <p-card [header]="'customerOverview' | translate">
   <p-table
     [value]="customers"
-    [tableStyle]="{ 'min-width': '50rem' }"
     [rowHover]="true"
     (onRowSelect)="openCustomer($event.data)"
     selectionMode="single"

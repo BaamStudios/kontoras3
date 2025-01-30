@@ -6,18 +6,21 @@
       <p-button
         [routerLink]="['/crm/overview']"
         icon="pi pi-list"
+        class="whitespace-nowrap"
         [label]="'overview' | translate"
         severity="secondary"
       ></p-button>
       <p-button
         (click)="confirmDelete()"
         icon="pi pi-trash"
+        class="whitespace-nowrap"
         [label]="'deleteCustomer' | translate"
         severity="danger"
       ></p-button>
       <p-button
         [routerLink]="['./edit']"
         icon="pi pi-pencil"
+        class="whitespace-nowrap"
         [label]="'editCustomer' | translate"
       ></p-button>
     </div>
@@ -67,6 +70,7 @@
       <p-button
         (click)="showConfirmDeleteModal = false"
         [label]="'no' | translate"
+        severity="secondary"
         styleClass="p-button-text"
       ></p-button>
       <p-button

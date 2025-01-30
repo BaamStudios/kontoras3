@@ -1,0 +1,11 @@
+:host {
+    .card {
+        margin-bottom: 1rem;
+    }
+
+    .confirmation-content {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+}

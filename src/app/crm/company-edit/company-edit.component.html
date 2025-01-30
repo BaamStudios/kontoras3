@@ -8,6 +8,7 @@
           entity.id ? ['/crm/company', entity.id.toString()] : ['/crm/overview']
         "
         icon="pi pi-undo"
+        class="whitespace-nowrap"
         [label]="'discardChanges' | translate"
         severity="secondary"
       ></p-button>
@@ -15,6 +16,7 @@
         (click)="saveChanges()"
         [disabled]="form?.form?.invalid || hasInvalidForms()"
         icon="pi pi-save"
+        class="whitespace-nowrap"
         [label]="'saveChanges' | translate"
         severity="success"
       ></p-button>

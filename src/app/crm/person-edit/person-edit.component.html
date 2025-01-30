@@ -1,125 +1,118 @@
 <ng-container *ngIf="entity">
-  <div cds-layout="horizontal gap:md align:left">
-    <h1>{{ 'editPerson' | translate }}</h1>
-
-    <div cds-layout="align:right align:vertical-center">
-      <button
+  <div class="flex justify-between align-items-center mb-3">
+    <h1>{{ "editPerson" | translate }}</h1>
+    <div class="flex gap-2">
+      <p-button
         [routerLink]="
           entity.id ? ['/crm/person', entity.id.toString()] : ['/crm/overview']
         "
-        type="button"
-        class="btn btn-icon btn-outline"
-        aria-label="cancel-edit-person"
-      >
-        <cds-icon shape="undo"></cds-icon>{{ 'discardChanges' | translate }}
-      </button>
-      <button
+        icon="pi pi-undo"
+        class="whitespace-nowrap"
+        label="{{ 'discardChanges' | translate }}"
+        severity="secondary"
+      ></p-button>
+      <p-button
         (click)="saveChanges()"
         [disabled]="form?.form?.invalid"
-        type="button"
-        class="btn btn-icon btn-success"
-        aria-label="save-person"
-      >
-        <cds-icon shape="floppy"></cds-icon>{{ 'saveChanges' | translate }}
-      </button>
+        icon="pi pi-save"
+        class="whitespace-nowrap"
+        label="{{ 'saveChanges' | translate }}"
+        severity="success"
+      ></p-button>
     </div>
   </div>
 
   <main>
-    <form #form="ngForm" clrForm clrLayout="horizontal">
-      <h3>{{ 'personData' | translate }}</h3>
-      <ng-container *ngIf="featureFlags.showSalutation">
-        <app-autofield
-          [field]="fields.salutation!"
-          [(entity)]="entity"
-          [label]="'salutation' | translate"
-        ></app-autofield>
-      </ng-container>
-      <ng-container *ngIf="featureFlags.showFirstname">
-        <app-autofield
-          [field]="fields.firstname"
-          [(entity)]="entity"
-          [label]="'firstname' | translate"
-        ></app-autofield>
-      </ng-container>
-      <ng-container *ngIf="featureFlags.showLastname">
-        <app-autofield
-          [field]="fields.lastname"
-          [(entity)]="entity"
-          [label]="'lastname' | translate"
-        ></app-autofield>
-      </ng-container>
-      <ng-container *ngIf="featureFlags.showCustomerNumber">
-        <app-autofield
-          [field]="fields.customerNumber"
-          width="400px"
-          [(entity)]="entity"
-          [placeholder]="previewCustomerNumber"
-          [label]="'customerNumber' | translate"
-        ></app-autofield>
-      </ng-container>
-      <ng-container *ngIf="featureFlags.showBirthdate">
-        <app-autofield
-          [field]="fields.birthdate"
-          [(entity)]="entity"
-          [label]="'birthdate' | translate"
-        ></app-autofield>
-      </ng-container>
-      <h3>Anschrift</h3>
-      <!-- TODO ADD COMPOENNT FOR ADDRESS-->
-      <!-- <app-autofield
-        [field]="fields.archived"
-        [(entity)]="person"
-        helperText="Soll der Kunde archiviert sein?"
-      ></app-autofield> -->
-    </form>
-    <div cds-layout="m-t:xl">
-      <clr-tabs>
-        <clr-tab *ngIf="featureFlags.showAddresses">
-          <button clrTabLink>{{ 'address' | translate }}</button>
-          <clr-tab-content *clrIfActive="true">
+    <form #form="ngForm" class="formgrid grid">
+      <p-card>
+        <h3>{{ "personData" | translate }}</h3>
+        <div class="grid">
+          <ng-container *ngIf="featureFlags.showSalutation">
+            <app-autofield
+              [field]="fields.salutation!"
+              [(entity)]="entity"
+              [label]="'salutation' | translate"
+            ></app-autofield>
+          </ng-container>
+          <ng-container *ngIf="featureFlags.showFirstname">
+            <app-autofield
+              [field]="fields.firstname"
+              [(entity)]="entity"
+              [label]="'firstname' | translate"
+            ></app-autofield>
+          </ng-container>
+          <ng-container *ngIf="featureFlags.showLastname">
+            <app-autofield
+              [field]="fields.lastname"
+              [(entity)]="entity"
+              [label]="'lastname' | translate"
+            ></app-autofield>
+          </ng-container>
+          <ng-container *ngIf="featureFlags.showCustomerNumber">
+            <app-autofield
+              [field]="fields.customerNumber"
+              width="400px"
+              [(entity)]="entity"
+              [placeholder]="previewCustomerNumber"
+              [label]="'customerNumber' | translate"
+            ></app-autofield>
+          </ng-container>
+          <ng-container *ngIf="featureFlags.showBirthdate">
+            <app-autofield
+              [field]="fields.birthdate"
+              [(entity)]="entity"
+              [label]="'birthdate' | translate"
+            ></app-autofield>
+          </ng-container>
+        </div>
+      </p-card>
+
+      <div class="mt-4">
+        <p-tabView>
+          <p-tabPanel
+            *ngIf="featureFlags.showAddresses"
+            header="{{ 'address' | translate }}"
+          >
             <ng-container *ngFor="let address of entity.addresses">
               <app-address-edit
                 [address]="address"
                 [parent]="instance"
               ></app-address-edit>
             </ng-container>
-            <button
-              cds-layout="m-t:md"
+            <p-button
               (click)="createRelationItem('addresses')"
-              type="button"
-              class="btn btn-outline"
-              aria-label="add-address"
-            >
-              <cds-icon shape="plus"></cds-icon> Adresse hinzufügen
-            </button>
-          </clr-tab-content>
-        </clr-tab>
-        <clr-tab *ngIf="featureFlags.showContactDetails">
-          <button clrTabLink>{{ 'contactDetails' | translate }}</button>
-          <clr-tab-content *clrIfActive>
-            <p cds-text="body" cds-layout="m-t:md">TODO</p>
-          </clr-tab-content>
-        </clr-tab>
-        <clr-tab *ngIf="featureFlags.showPaymentInformation">
-          <button clrTabLink>{{ 'paymentInformation' | translate }}</button>
-          <clr-tab-content *clrIfActive>
-            <p cds-text="body" cds-layout="m-t:md">TODO</p>
-          </clr-tab-content>
-        </clr-tab>
-        <clr-tab *ngIf="featureFlags.showConditions">
-          <button clrTabLink>{{ 'conditions' | translate }}</button>
-          <clr-tab-content *clrIfActive>
-            <p cds-text="body" cds-layout="m-t:md">TODO</p>
-          </clr-tab-content>
-        </clr-tab>
-        <clr-tab *ngIf="featureFlags.showAdditional">
-          <button clrTabLink>{{ 'additional' | translate }}</button>
-          <clr-tab-content *clrIfActive>
-            <p cds-text="body" cds-layout="m-t:md">TODO</p>
-          </clr-tab-content>
-        </clr-tab>
-      </clr-tabs>
-    </div>
+              icon="pi pi-plus"
+              label="Adresse hinzufügen"
+              styleClass="mt-3"
+              severity="secondary"
+            ></p-button>
+          </p-tabPanel>
+          <p-tabPanel
+            *ngIf="featureFlags.showContactDetails"
+            header="{{ 'contactDetails' | translate }}"
+          >
+            <p>TODO</p>
+          </p-tabPanel>
+          <p-tabPanel
+            *ngIf="featureFlags.showPaymentInformation"
+            header="{{ 'paymentInformation' | translate }}"
+          >
+            <p>TODO</p>
+          </p-tabPanel>
+          <p-tabPanel
+            *ngIf="featureFlags.showConditions"
+            header="{{ 'conditions' | translate }}"
+          >
+            <p>TODO</p>
+          </p-tabPanel>
+          <p-tabPanel
+            *ngIf="featureFlags.showAdditional"
+            header="{{ 'additional' | translate }}"
+          >
+            <p>TODO</p>
+          </p-tabPanel>
+        </p-tabView>
+      </div>
+    </form>
   </main>
 </ng-container>
