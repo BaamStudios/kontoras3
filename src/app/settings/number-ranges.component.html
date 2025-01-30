@@ -1,14 +1,15 @@
 <ng-container>
   <div>
     <h1>Nummernkreise</h1>
-
     <main>
-      <div cds-layout="vertical gap:xxl align:horizontal-stretch">
-        <app-number-range-edit
-          *ngFor="let numberRangeType of numberRangeTypes"
-          [numberRangeType]="numberRangeType"
-        ></app-number-range-edit>
-      </div>
+
+        <div>
+          <app-number-range-edit
+            *ngFor="let numberRangeType of numberRangeTypes"
+            [numberRangeType]="numberRangeType"
+          ></app-number-range-edit>
+        </div>
+
     </main>
   </div>
 </ng-container>
