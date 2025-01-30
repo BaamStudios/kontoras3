@@ -75,9 +75,12 @@
       variant="simple"
       size="small"
     ></p-message>
-    <small *ngIf="helperText" [id]="field.key + '-help'">{{
-      helperText
-    }}</small>
+
+    <small
+      *ngIf="helperText"
+      [id]="field.key + '-help'"
+      [innerHTML]="helperText"
+    ></small>
 
     <label [for]="field.key">{{ label || field.caption }}</label>
   </div>

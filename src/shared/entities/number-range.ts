@@ -5,7 +5,7 @@ import { Base } from './base';
 Handlebars.registerHelper('pad', function (arg1, arg2, options) {
   if (options) {
     const minLength = arg1.toString();
-    const stringValue = arg2.toString();
+    const stringValue = arg2?.toString() ?? '';
     return stringValue.toString().padStart(minLength, '0');
   } else {
     const minLength = 4;
@@ -44,8 +44,8 @@ export async function bootstrapNumberRanges() {
 @Entity('numberrange', {
   allowApiCrud: true,
   saved(entity: NumberRange, e) {
-      if (entity?.numberRangeType === 'Kundennummern') {
-      }
+    if (entity?.numberRangeType === 'Kundennummern') {
+    }
   },
 })
 export class NumberRange extends Base {

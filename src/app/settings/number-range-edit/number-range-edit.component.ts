@@ -15,19 +15,19 @@ import {
 import { AutofieldComponent } from '../../core/autofield/autofield.component';
 
 @Component({
-    selector: 'app-number-range-edit',
-    imports: [
-        CommonModule,
-        FormsModule,
-        ToastModule,
-        AutofieldComponent,
-        TranslateModule,
-        ButtonModule,
-        CardModule
-    ],
-    templateUrl: './number-range-edit.component.html',
-    styleUrl: './number-range-edit.component.scss',
-    providers: [MessageService]
+  selector: 'app-number-range-edit',
+  imports: [
+    CommonModule,
+    FormsModule,
+    ToastModule,
+    AutofieldComponent,
+    TranslateModule,
+    ButtonModule,
+    CardModule,
+  ],
+  templateUrl: './number-range-edit.component.html',
+  styleUrl: './number-range-edit.component.scss',
+  providers: [MessageService],
 })
 export class NumberRangeEditComponent implements OnInit {
   repo = remult.repo(NumberRange);
@@ -60,7 +60,8 @@ export class NumberRangeEditComponent implements OnInit {
       this.messageService.add({
         severity: 'success',
         summary: 'Success',
-        detail: 'Der Nummernkreis "' + this.numberRangeType + '" wurde gespeichert.'
+        detail:
+          'Der Nummernkreis "' + this.numberRangeType + '" wurde gespeichert.',
       });
     }
   }
@@ -93,6 +94,8 @@ export class NumberRangeEditComponent implements OnInit {
     \\{{DD}} - Aktueller Tag ({{DD}})<br/>
     \\{{D}} - Aktueller Tag ({{D}})`;
     const template = Handlebars.compile(helpTemplate);
-    return template(this.entity!.getFormatVariables(this.entity?.nextSequenceValue!));
+    return template(
+      this.entity!.getFormatVariables(this.entity?.nextSequenceValue!)
+    );
   }
 }
