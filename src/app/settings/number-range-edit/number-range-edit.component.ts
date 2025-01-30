@@ -1,11 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ClarityModule, ClrFormsModule } from '@clr/angular';
-import Handlebars from 'handlebars';
-import { ToastrService } from 'ngx-toastr';
-import { remult } from 'remult';
 import { TranslateModule } from '@ngx-translate/core';
+import Handlebars from 'handlebars';
+import { MessageService } from 'primeng/api';
+import { ButtonModule } from 'primeng/button';
+import { CardModule } from 'primeng/card';
+import { ToastModule } from 'primeng/toast';
+import { remult } from 'remult';
 import {
   NumberRange,
   NumberRangeType,
@@ -17,13 +19,15 @@ import { AutofieldComponent } from '../../core/autofield/autofield.component';
     imports: [
         CommonModule,
         FormsModule,
-        ClrFormsModule,
-        ClarityModule,
+        ToastModule,
         AutofieldComponent,
-        TranslateModule
+        TranslateModule,
+        ButtonModule,
+        CardModule
     ],
     templateUrl: './number-range-edit.component.html',
-    styleUrl: './number-range-edit.component.scss'
+    styleUrl: './number-range-edit.component.scss',
+    providers: [MessageService]
 })
 export class NumberRangeEditComponent implements OnInit {
   repo = remult.repo(NumberRange);
@@ -40,7 +44,7 @@ export class NumberRangeEditComponent implements OnInit {
 
   @ViewChild('form') form!: any;
 
-  constructor(private toastr: ToastrService) {}
+  constructor(private messageService: MessageService) {}
 
   async ngOnInit(): Promise<void> {
     this.fields = this.repo.metadata.fields;
@@ -53,9 +57,11 @@ export class NumberRangeEditComponent implements OnInit {
     if (this.form.valid) {
       await this.repo.save(this.entity!);
       this.form.form.markAsPristine();
-      this.toastr.success(
-        'Der Nummernkreis "' + this.numberRangeType + '" wurde gespeichert.'
-      );
+      this.messageService.add({
+        severity: 'success',
+        summary: 'Success',
+        detail: 'Der Nummernkreis "' + this.numberRangeType + '" wurde gespeichert.'
+      });
     }
   }
 
