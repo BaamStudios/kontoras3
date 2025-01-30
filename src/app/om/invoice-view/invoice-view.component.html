@@ -1,32 +1,28 @@
 <ng-container *ngIf="entity">
-  <div style="display: flex; justify-content: space-between; align-items: center;">
-    <h1>{{ "invoice" | translate }} {{ entity.displayName }}</h1>
+  <div class="flex justify-between align-items-center mb-3">
+    <h1>{{ "invoice" | translate }}: {{ entity.displayName }}</h1>
 
-    <div style="display: flex; gap: 10px;">
-      <button
-        pButton
-        type="button"
-        label="{{ 'overview' | translate }}"
-        icon="pi pi-list"
-        class="p-button-outlined"
+    <div class="flex gap-2">
+      <p-button
+        class="whitespace-nowrap"
         [routerLink]="['/om/invoice']"
-      ></button>
-      <button
-        pButton
-        type="button"
-        label="{{ 'deleteInvoice' | translate }}"
-        icon="pi pi-trash"
-        class="p-button-outlined p-button-danger"
+        icon="pi pi-list"
+        [label]="'overview' | translate"
+        severity="secondary"
+      ></p-button>
+      <p-button
+        class="whitespace-nowrap"
         (click)="confirmDelete()"
-      ></button>
-      <button
-        pButton
-        type="button"
-        label="{{ 'editInvoice' | translate }}"
-        icon="pi pi-pencil"
-        class="p-button-primary"
+        icon="pi pi-trash"
+        [label]="'deleteInvoice' | translate"
+        severity="danger"
+      ></p-button>
+      <p-button
+        class="whitespace-nowrap"
         [routerLink]="['./edit']"
-      ></button>
+        icon="pi pi-pencil"
+        [label]="'editInvoice' | translate"
+      ></p-button>
     </div>
   </div>
 

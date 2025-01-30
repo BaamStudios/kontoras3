@@ -1,49 +1,47 @@
-<div class="clr-row">
-  <div class="clr-col-lg-4 clr-col-md-8 clr-col-12" style="max-width: 440px">
-    <div class="card">
-      <div class="card-block">
-        <div class="card-text">
-          <form #form="ngForm" clrForm clrLayout="horizontal">
-            <app-autofield
-              [field]="fields.street"
-              [(entity)]="address"
-              [label]="'street' | translate"
-            ></app-autofield>
-            <app-autofield
-              [field]="fields.zip"
-              width="90px"
-              [(entity)]="address"
-              [label]="'zip' | translate"
-            ></app-autofield>
-            <app-autofield
-              [field]="fields.city"
-              [(entity)]="address"
-              [label]="'city' | translate"
-            ></app-autofield>
-            <app-autofield
-              [field]="fields.country"
-              width="100%"
-              [(entity)]="address"
-              [label]="'country' | translate"
-            ></app-autofield>
-            <app-autofield
-              [field]="fields.addressType!"
-              [(entity)]="address"
-              [label]="'addressType' | translate"
-            ></app-autofield>
-          </form>
-        </div>
+<div style="max-width: 440px">
+  <div class="card">
+    <div class="card-block">
+      <div class="card-text">
+        <form #form="ngForm" clrForm clrLayout="horizontal">
+          <app-autofield
+            [field]="fields.street"
+            [(entity)]="address"
+            [label]="'street' | translate"
+          ></app-autofield>
+          <app-autofield
+            [field]="fields.zip"
+            width="90px"
+            [(entity)]="address"
+            [label]="'zip' | translate"
+          ></app-autofield>
+          <app-autofield
+            [field]="fields.city"
+            [(entity)]="address"
+            [label]="'city' | translate"
+          ></app-autofield>
+          <app-autofield
+            [field]="fields.country"
+            width="100%"
+            [(entity)]="address"
+            [label]="'country' | translate"
+          ></app-autofield>
+          <app-autofield
+            [field]="fields.addressType!"
+            [(entity)]="address"
+            [label]="'addressType' | translate"
+          ></app-autofield>
+        </form>
       </div>
-      <div class="card-footer">
-        <p-button
-          icon="pi pi-times-circle"
-          [label]="'removeAddress' | translate"
-          severity="danger"
-          variant="text"
-          (click)="parent.deleteRelationItem('addresses', address)"
-        >
-        </p-button>
-      </div>
+    </div>
+    <div class="card-footer">
+      <p-button
+        icon="pi pi-times-circle"
+        [label]="'removeAddress' | translate"
+        severity="danger"
+        variant="text"
+        (click)="parent.deleteRelationItem('addresses', address)"
+      >
+      </p-button>
     </div>
   </div>
 </div>
