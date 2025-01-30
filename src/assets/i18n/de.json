@@ -12,7 +12,7 @@
   "company": "Firma",
   "companyData": "Firmendaten",
   "conditions": "Konditionen",
-  "confirmDeleteCompany": "Soll die Firma '{{ entity }}' wirklich gelöscht werden?",
+  "confirmDeleteCompany": "Soll die Firma '<b>{{ entity }}</b>' wirklich gelöscht werden?",
   "confirmDeleteCustomer": "Kunden löschen",
   "confirmDeletePerson": "Soll die Person '{{ firstname }} {{ lastname }}' wirklich gelöscht werden?",
   "confirmDeleteInvoice": "Soll die Rechnung '{{ displayName }}' wirklich gelöscht werden?",

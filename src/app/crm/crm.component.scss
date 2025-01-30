@@ -1,0 +1,11 @@
+:host ::ng-deep {
+    .p-menu {
+        width: 200px;
+    }
+
+    .p-table {
+        .p-selectable-row {
+            cursor: pointer;
+        }
+    }
+}

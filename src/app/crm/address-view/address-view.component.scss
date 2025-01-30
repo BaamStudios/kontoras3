@@ -1,0 +1,11 @@
+:host ::ng-deep {
+    .p-table {
+        th {
+            font-weight: 600;
+        }
+
+        td {
+            white-space: pre-line;
+        }
+    }
+}

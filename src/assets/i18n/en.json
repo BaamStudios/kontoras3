@@ -12,7 +12,7 @@
   "deleteCustomer": "Delete customer",
   "confirmDeleteCustomer": "Are you sure you want to delete the customer?",
   "warning": "Warning!",
-  "confirmDeleteCompany": "Are you sure you want to delete the company '{{ entity }}'?",
+  "confirmDeleteCompany": "Are you sure you want to delete the company '<b>{{ entity }}</b>'?",
   "editInvoice": "Edit Invoice",
   "contactAndBillingInfo": "Contact and Billing Information",
   "headerText": "Header Text",

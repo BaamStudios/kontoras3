@@ -1,74 +1,72 @@
-<div cds-layout="horizontal gap:md align:left">
-  <h1>{{ 'customerOverview' | translate }}</h1>
-
-  <!-- <button [routerLink]="['/crm/person', 'new', 'edit']"
-    cds-layout="align:right align:vertical-center"
+<div class="mb-5 w-100 flex justify-end">
+  <p-menu #menu [model]="menuItems" [popup]="true"></p-menu>
+  <button
+    pButton
     type="button"
-    class="btn btn-icon btn-primary"
-    aria-label="add-customer"
-  >
-    Kunden hinzufügen
-    <cds-icon shape="plus"></cds-icon>
-  </button> -->
-
-  <clr-dropdown cds-layout="align:right align:vertical-center">
-    <button class="btn btn-primary" clrDropdownTrigger>
-      <cds-icon shape="angle" direction="down"></cds-icon>{{ 'addCustomer' | translate }}
-    </button>
-    <clr-dropdown-menu clrPosition="bottom-left" *clrIfOpen>
-      <div *ngIf="featureFlags.enablePersonCreation"
-        aria-label="Person"
-        clrDropdownItem
-        style="font-size: 20px"
-        cds-layout="p-y:xs"
-        [routerLink]="['/crm/person', 'new', 'edit']"
-      >
-        <cds-icon size="md" shape="id-badge"></cds-icon>{{ 'person' | translate }}
-      </div>
-      <div *ngIf="featureFlags.enableCompanyCreation"
-        aria-label="Firma"
-        clrDropdownItem
-        style="font-size: 20px"
-        cds-layout="p-y:xs"
-        [routerLink]="['/crm/company', 'new', 'edit']"
-      >
-        <cds-icon size="md" shape="building"></cds-icon>{{ 'company' | translate }}
-      </div>
-    </clr-dropdown-menu>
-  </clr-dropdown>
+    (click)="menu.toggle($event)"
+    icon="pi pi-plus"
+    label="{{ 'addCustomer' | translate }}"
+    [raised]="true"
+  ></button>
 </div>
 
-<main>
-  <clr-datagrid>
-    <clr-dg-column *ngIf="featureFlags.showIdColumn" style="width: 20px">{{ 'id' | translate }}</clr-dg-column>
-    <clr-dg-column *ngIf="featureFlags.showTypeColumn" style="width: 120px" [clrDgField]="'displayName'">{{ 'type' | translate }}</clr-dg-column>
-    <clr-dg-column *ngIf="featureFlags.showNameColumn" [clrDgField]="'customerType'">{{ 'name' | translate }}</clr-dg-column>
-    <clr-dg-column *ngIf="featureFlags.showCreatedAtColumn" style="width: 200px" [clrDgField]="'createdAt'" [(clrDgSortOrder)]="sortOrder">{{ 'createdAt' | translate }}</clr-dg-column>
-    <clr-dg-column *ngIf="featureFlags.showUpdatedAtColumn" style="width: 200px" [clrDgField]="'updatedAt'">{{ 'updatedAt' | translate }}</clr-dg-column>
-    <clr-dg-row
-      *clrDgItems="let customer of customers"
-      [clrDgItem]="customer"
-      (click)="openCustomer(customer)"
-    >
-      <clr-dg-cell *ngIf="featureFlags.showIdColumn" style="width: 20px">
-        <clr-tooltip>
-          <cds-icon
-            clrTooltipTrigger
-            [attr.shape]="customer.customerType === 'Person' ? 'id-badge' : 'building'"
-            size="18"
-            (click)="copyCustomerId(customer.id)"
-          ></cds-icon>
-          <clr-tooltip-content [clrSize]="'md'">
-            {{ customer.id }}
-          </clr-tooltip-content>
-        </clr-tooltip>
-      </clr-dg-cell>
-      <clr-dg-cell *ngIf="featureFlags.showTypeColumn">{{ customer.customerType.toLowerCase() | translate }}</clr-dg-cell>
-      <clr-dg-cell *ngIf="featureFlags.showNameColumn">{{ customer.displayName }}</clr-dg-cell>
-      <clr-dg-cell *ngIf="featureFlags.showCreatedAtColumn">{{ customer.createdAt | date : "short" }} Uhr</clr-dg-cell>
-      <clr-dg-cell *ngIf="featureFlags.showUpdatedAtColumn">{{ customer.updatedAt | date : "short" }} Uhr</clr-dg-cell>
-    </clr-dg-row>
-
-    <clr-dg-footer>{{ customers.length }} {{ 'customers' | translate }}</clr-dg-footer>
-  </clr-datagrid>
-</main>
+<p-card [header]="'customerOverview' | translate">
+  <p-table
+    [value]="customers"
+    [tableStyle]="{ 'min-width': '50rem' }"
+    [rowHover]="true"
+    (onRowSelect)="openCustomer($event.data)"
+    selectionMode="single"
+  >
+    <ng-template pTemplate="header">
+      <tr>
+        <th *ngIf="featureFlags.showIdColumn" style="width: 50px">
+          {{ "id" | translate }}
+        </th>
+        <th *ngIf="featureFlags.showTypeColumn" style="width: 120px">
+          {{ "type" | translate }}
+        </th>
+        <th *ngIf="featureFlags.showNameColumn">{{ "name" | translate }}</th>
+        <th *ngIf="featureFlags.showCreatedAtColumn" style="width: 200px">
+          {{ "createdAt" | translate }}
+        </th>
+        <th *ngIf="featureFlags.showUpdatedAtColumn" style="width: 200px">
+          {{ "updatedAt" | translate }}
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-customer>
+      <tr [pSelectableRow]="customer">
+        <td *ngIf="featureFlags.showIdColumn">
+          <i
+            [class]="
+              customer.customerType === 'Person'
+                ? 'pi pi-user'
+                : 'pi pi-building'
+            "
+            [pTooltip]="customer.id"
+            (click)="copyCustomerId(customer.id); $event.stopPropagation()"
+          >
+          </i>
+        </td>
+        <td *ngIf="featureFlags.showTypeColumn">
+          {{ customer.customerType.toLowerCase() | translate }}
+        </td>
+        <td *ngIf="featureFlags.showNameColumn">{{ customer.displayName }}</td>
+        <td *ngIf="featureFlags.showCreatedAtColumn">
+          {{ customer.createdAt | date : "short" }} Uhr
+        </td>
+        <td *ngIf="featureFlags.showUpdatedAtColumn">
+          {{ customer.updatedAt | date : "short" }} Uhr
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="footer">
+      <tr>
+        <td colspan="5">
+          {{ customers.length }} {{ "customers" | translate }}
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</p-card>

@@ -2,16 +2,15 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import {
-  ClarityModule,
-  ClrComboboxModule,
-  ClrDatagridModule,
-  ClrDatagridSortOrder,
-  ClrDropdownModule,
-} from '@clr/angular';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
 import { remult } from 'remult';
+import { TableModule } from 'primeng/table';
+import { MenuModule } from 'primeng/menu';
+import { ButtonModule } from 'primeng/button';
+import { TooltipModule } from 'primeng/tooltip';
+import { MenuItem } from 'primeng/api';
+import { CardModule } from 'primeng/card';
 import { Customer } from '../../shared/entities/customer';
 import { Person } from '../../shared/entities/person';
 import { Company } from '../../shared/entities/company';
@@ -19,15 +18,16 @@ import { featureFlags } from '../feature-flags';
 
 @Component({
   selector: 'app-crm',
+  standalone: true,
   imports: [
     CommonModule,
     FormsModule,
-    ClarityModule,
-    ClrComboboxModule,
-    ClrDatagridModule,
-    RouterLink,
-    ClrDropdownModule,
+    TableModule,
+    MenuModule,
+    ButtonModule,
+    TooltipModule,
     TranslateModule,
+    CardModule,
   ],
   templateUrl: './crm.component.html',
   styleUrl: './crm.component.scss',
@@ -38,12 +38,28 @@ export class CrmComponent implements OnInit {
   customers: Customer[] = [];
   featureFlags = featureFlags.crmOverview;
 
-  sortOrder: ClrDatagridSortOrder = ClrDatagridSortOrder.DESC;
+  menuItems: MenuItem[] = [];
+
   constructor(
     private router: Router,
     private translate: TranslateService,
     private toastr: ToastrService
-  ) {} // Initialize the 'router', 'translate', and 'toastr' variables
+  ) {
+    this.menuItems = [
+      {
+        label: this.translate.instant('person'),
+        icon: 'pi pi-user',
+        visible: this.featureFlags.enablePersonCreation,
+        command: () => this.router.navigate(['/crm/person', 'new', 'edit']),
+      },
+      {
+        label: this.translate.instant('company'),
+        icon: 'pi pi-building',
+        visible: this.featureFlags.enableCompanyCreation,
+        command: () => this.router.navigate(['/crm/company', 'new', 'edit']),
+      },
+    ];
+  }
 
   async ngOnInit() {
     const persons = this.featureFlags.includePersons

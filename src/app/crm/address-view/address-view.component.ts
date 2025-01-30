@@ -2,15 +2,24 @@ import { Component, Input } from '@angular/core';
 import { Customer } from '../../../shared/entities/customer';
 import { Address } from '../../../shared/entities/address';
 import { CommonModule } from '@angular/common';
-import { ClarityModule, ClrAlertModule } from '@clr/angular';
+import { TableModule } from 'primeng/table';
+import { ButtonModule } from 'primeng/button';
 import { ToastrService } from 'ngx-toastr';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
+import { TooltipModule } from 'primeng/tooltip';
 
 @Component({
-    selector: 'app-address-view',
-    imports: [CommonModule, ClarityModule, ClrAlertModule, TranslateModule],
-    templateUrl: './address-view.component.html',
-    styleUrl: './address-view.component.scss'
+  selector: 'app-address-view',
+  imports: [
+    CommonModule,
+    TableModule,
+    ButtonModule,
+    TranslateModule,
+    TooltipModule,
+  ],
+  templateUrl: './address-view.component.html',
+  styleUrl: './address-view.component.scss',
+  standalone: true,
 })
 export class AddressViewComponent {
   @Input()
@@ -18,7 +27,10 @@ export class AddressViewComponent {
   @Input()
   entity!: Customer;
 
-  constructor(private toastr: ToastrService, private translate: TranslateService) {}
+  constructor(
+    private toastr: ToastrService,
+    private translate: TranslateService
+  ) {}
 
   async copy() {
     console.log('copying address to clipboard');

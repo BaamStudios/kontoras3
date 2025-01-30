@@ -1,18 +1,24 @@
-<table class="table table-vertical">
-  <tbody>
+<p-table [tableStyle]="{ 'min-width': '20rem' }">
+  <ng-template pTemplate="body">
     <tr>
       <th>
-        {{ 'address' | translate }} <br /><small>{{ address.addressType }}</small>
+        {{ "address" | translate }} <br /><small>{{
+          address.addressType
+        }}</small>
       </th>
       <td>
         {{ entity.displayName }}
-        <button class="btn btn-link" title="{{ 'copyToClipboard' | translate }}" (click)="copy()">
-          <cds-icon shape="copy"></cds-icon>
-        </button>
+        <p-button
+          icon="pi pi-copy"
+          (click)="copy()"
+          [text]="true"
+          [pTooltip]="'copyToClipboard' | translate"
+        >
+        </p-button>
         <br *ngIf="address.street" />{{ address.street }}
         <br *ngIf="address.zip || address.city" />{{ address.zip }}
         {{ address.city }} <br *ngIf="address.country" />{{ address.country }}
       </td>
     </tr>
-  </tbody>
-</table>
+  </ng-template>
+</p-table>
