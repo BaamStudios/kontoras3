@@ -2,7 +2,7 @@ import { Routes } from '@angular/router';
 import { AppLayout } from './layout/component/app.layout';
 import { Landing } from './pages/landing/landing';
 import { Notfound } from './pages/notfound/notfound';
-import { authGuard } from './auth/auth.guard';
+import { authGuard } from './pages/auth/auth.guard';
 
 export const routes: Routes = [
   {
@@ -14,10 +14,22 @@ export const routes: Routes = [
         redirectTo: 'crm/overview',
         pathMatch: 'full',
       },
-      { path: 'crm', canActivate: [authGuard], canActivateChild: [authGuard], loadChildren: () => import('./crm/crm.routes') },
-      { path: 'om', canActivate: [authGuard], canActivateChild: [authGuard], loadChildren: () => import('./om/om.routes') },
       {
-        path: 'settings', canActivate: [authGuard], canActivateChild: [authGuard],
+        path: 'crm',
+        canActivate: [authGuard],
+        canActivateChild: [authGuard],
+        loadChildren: () => import('./crm/crm.routes'),
+      },
+      {
+        path: 'om',
+        canActivate: [authGuard],
+        canActivateChild: [authGuard],
+        loadChildren: () => import('./om/om.routes'),
+      },
+      {
+        path: 'settings',
+        canActivate: [authGuard],
+        canActivateChild: [authGuard],
         loadChildren: () => import('./settings/settings.routes'),
       },
     ],

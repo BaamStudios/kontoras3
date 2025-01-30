@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { authGuard } from '../auth/auth.guard';
+import { authGuard } from '../pages/auth/auth.guard';
 import { CompanyEditComponent } from './company-edit/company-edit.component';
 import { CompanyViewComponent } from './company-view/company-view.component';
 import { CrmComponent } from './crm.component';

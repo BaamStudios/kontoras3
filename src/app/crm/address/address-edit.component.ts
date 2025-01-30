@@ -10,7 +10,6 @@ import {
   ViewChild,
 } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
-import { ClrFormsModule } from '@clr/angular';
 import { FieldsMetadata, getEntityRef } from 'remult';
 import { Address } from '../../../shared/entities/address';
 import { AutofieldComponent } from '../../core/autofield/autofield.component';
@@ -24,13 +23,7 @@ import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'app-address-edit',
-  imports: [
-    AutofieldComponent,
-    FormsModule,
-    ClrFormsModule,
-    TranslateModule,
-    ButtonModule,
-  ],
+  imports: [AutofieldComponent, FormsModule, TranslateModule, ButtonModule],
   templateUrl: './address-edit.component.html',
   styleUrl: './address-edit.component.scss',
 })

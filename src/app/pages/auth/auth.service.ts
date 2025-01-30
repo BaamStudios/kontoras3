@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserInfo, remult } from 'remult';
 import { Subject, firstValueFrom } from 'rxjs';
-import { ErrorService } from '../error.service';
+import { ErrorService } from '../../error.service';
 
 @Injectable({
   providedIn: 'root',

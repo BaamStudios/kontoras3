@@ -65,6 +65,12 @@ export class AutofieldComponent {
   @Input()
   placeholder: string = '';
 
+  @Input()
+  key: string = '';
+
+  @Input()
+  selectPopupAppendTo?: string = undefined;
+
   constructor(public form: NgForm) {}
 
   getOptionValues(field: string) {

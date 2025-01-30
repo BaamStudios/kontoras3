@@ -43,6 +43,7 @@ export class InvoiceItem extends Base {
     caption: 'Mengentyp',
     allowNull: true,
     inputType: 'select-literal',
+    defaultValue: amountTypes[0] as never,
   })
   amountType?: AmountType;
 

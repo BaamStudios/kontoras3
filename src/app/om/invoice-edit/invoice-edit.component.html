@@ -86,7 +86,7 @@
         </div>
       </div>
 
-      <div style="display: flex; flex-direction: column">
+      <!-- <div style="display: flex; flex-direction: column">
         <div style="display: flex; padding: 6px">
           <label style="flex: 1">{{ "productOrService" | translate }}</label>
           <label style="flex: 1">{{ "quantity" | translate }}</label>
@@ -103,7 +103,110 @@
           [item]="item"
           [parent]="instance"
         ></app-invoice-item-edit>
-      </div>
+      </div> -->
+
+      <p-table
+        [scrollable]="false"
+        [value]="entity.items!"
+        [tableStyle]="{ 'min-width': '60rem' }"
+      >
+        <ng-template #caption>
+          <div class="flex items-center justify-between">
+            <span class="text-xl font-bold">Products</span>
+            <p-button icon="pi pi-refresh" rounded raised />
+          </div>
+        </ng-template>
+        <ng-template #header>
+          <tr>
+            <th>{{ "productOrService" | translate }}</th>
+            <th>{{ "quantity" | translate }}</th>
+            <th>{{ "quantityType" | translate }}</th>
+            <th>{{ "price" | translate }}</th>
+            <th>{{ "tax" | translate }}</th>
+            <th>{{ "discount" | translate }}</th>
+            <th>{{ "discountType" | translate }}</th>
+            <th>{{ "total" | translate }}</th>
+            <th></th>
+          </tr>
+        </ng-template>
+        <ng-template #body let-item>
+          <tr *ngIf="getFields(item) as itemFields">
+            <td>
+              <app-autofield
+                [field]="itemFields.name"
+                [entity]="item"
+                [showLabel]="false"
+                [key]="entity.items!.indexOf(item).toString()"
+              ></app-autofield>
+            </td>
+            <td>
+              <app-autofield
+                [field]="itemFields.quantity"
+                [entity]="item"
+                [showLabel]="false"
+                [key]="entity.items!.indexOf(item).toString()"
+              ></app-autofield>
+            </td>
+            <td>
+              <app-autofield
+                [field]="itemFields.amountType!"
+                [entity]="item"
+                [showLabel]="false"
+                [key]="entity.items!.indexOf(item).toString()"
+                selectPopupAppendTo="body"
+              ></app-autofield>
+            </td>
+
+            <td>
+              <app-autofield
+                [field]="itemFields.price"
+                [entity]="item"
+                [showLabel]="false"
+                [key]="entity.items!.indexOf(item).toString()"
+              ></app-autofield>
+            </td>
+            <td>
+              <app-autofield
+                [field]="itemFields.vat"
+                [entity]="item"
+                [showLabel]="false"
+                [key]="entity.items!.indexOf(item).toString()"
+              ></app-autofield>
+            </td>
+            <td>
+              <app-autofield
+                [field]="itemFields.discount"
+                [entity]="item"
+                [showLabel]="false"
+                [key]="entity.items!.indexOf(item).toString()"
+              ></app-autofield>
+            </td>
+            <td>
+              <app-autofield
+                [field]="itemFields.discountType!"
+                [entity]="item"
+                [showLabel]="false"
+                [key]="entity.items!.indexOf(item).toString()"
+              ></app-autofield>
+            </td>
+            <td>
+              <div>
+                {{ item.total | currency : "EUR" }}
+              </div>
+            </td>
+            <td>
+              <button
+                pButton
+                pRipple
+                type="button"
+                icon="pi pi-times"
+                class="p-button-text p-button-danger p-button-sm"
+                (click)="instance.deleteRelationItem('items', item)"
+              ></button>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
 
       <div>net: {{ entity.netTotal | currency : "EUR" }}</div>
       <div>gross: {{ entity.grossTotal | currency : "EUR" }}</div>

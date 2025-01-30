@@ -1,0 +1,15 @@
+:host {
+    .p-field {
+        margin-bottom: 0;
+    }
+
+    .invoice-item-form {
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+
+        >* {
+            flex: 1;
+        }
+    }
+}

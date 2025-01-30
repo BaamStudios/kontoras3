@@ -1,70 +1,56 @@
-<form #form="ngForm" clrForm clrLayout="horizontal" style="display: flex">
+<form #form="ngForm" class="invoice-item-form">
   <app-autofield
-    style="flex: 1"
     [field]="fields.name"
     [(entity)]="item"
     [showLabel]="false"
   ></app-autofield>
 
   <app-autofield
-    style="flex: 1"
     [field]="fields.quantity"
     [(entity)]="item"
     [showLabel]="false"
   ></app-autofield>
+
   <app-autofield
-    style="flex: 1"
     [field]="fields.amountType!"
     [(entity)]="item"
     [showLabel]="false"
   ></app-autofield>
 
   <app-autofield
-    style="flex: 1"
     [field]="fields.price"
     [(entity)]="item"
     [showLabel]="false"
   ></app-autofield>
+
   <app-autofield
-    style="flex: 1"
     [field]="fields.vat"
     [(entity)]="item"
     [showLabel]="false"
   ></app-autofield>
 
   <app-autofield
-    style="flex: 1"
     [field]="fields.discount"
     [(entity)]="item"
     [showLabel]="false"
   ></app-autofield>
+
   <app-autofield
-    style="flex: 1"
     [field]="fields.discountType!"
     [(entity)]="item"
     [showLabel]="false"
   ></app-autofield>
 
-  <div style="flex: 1">
+  <div>
     {{ item.total | currency : "EUR" }}
   </div>
 
   <button
-    class="btn btn-sm btn-link"
-    style="flex: 1"
+    pButton
+    pRipple
     type="button"
+    icon="pi pi-times"
+    class="p-button-text p-button-danger p-button-sm"
     (click)="parent.deleteRelationItem('items', item)"
-  >
-    <cds-icon shape="times"></cds-icon>
-  </button>
+  ></button>
 </form>
-
-<!-- <div class="card-footer">
-        <button
-          class="btn btn-sm btn-link"
-          style="color: var(--cds-alias-status-danger)"
-          (click)="parent.deleteRelationItem('items', item)"
-        >
-          Position entfernen
-        </button>
-      </div> -->

@@ -8,7 +8,6 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
-import { ClarityModule, ClrFormsModule } from '@clr/angular';
 import { FieldsMetadata, getEntityRef } from 'remult';
 import { Invoice } from '../../../shared/entities/invoice';
 import { InvoiceItem } from '../../../shared/entities/invoice-item';
@@ -16,16 +15,18 @@ import { AutofieldComponent } from '../../core/autofield/autofield.component';
 import { EditComponent } from '../../core/edit/edit.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { CommonModule } from '@angular/common';
+import { ButtonModule } from 'primeng/button';
+import { RippleModule } from 'primeng/ripple';
 
 @Component({
   selector: 'app-invoice-item-edit',
   imports: [
     AutofieldComponent,
     FormsModule,
-    ClrFormsModule,
     TranslateModule,
-    ClarityModule,
     CommonModule,
+    ButtonModule,
+    RippleModule,
   ],
   templateUrl: './invoice-item-edit.component.html',
   styleUrl: './invoice-item-edit.component.scss',

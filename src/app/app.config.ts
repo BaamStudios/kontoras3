@@ -6,7 +6,12 @@ import {
   provideZoneChangeDetection,
 } from '@angular/core';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { provideRouter, withComponentInputBinding, withEnabledBlockingInitialNavigation, withInMemoryScrolling } from '@angular/router';
+import {
+  provideRouter,
+  withComponentInputBinding,
+  withEnabledBlockingInitialNavigation,
+  withInMemoryScrolling,
+} from '@angular/router';
 import {
   TranslateLoader,
   TranslateModule,
@@ -17,7 +22,7 @@ import { provideToastr } from 'ngx-toastr';
 import { providePrimeNG } from 'primeng/config';
 import { routes } from './app.routes';
 import { HttpLoaderFactory } from './app.translate-loader';
-import { AuthService } from './auth/auth.service';
+import { AuthService } from './pages/auth/auth.service';
 
 export function initializeTranslations(translate: TranslateService) {
   return () => {
@@ -44,7 +49,15 @@ export const appConfig: ApplicationConfig = {
     },
     provideToastr(),
     provideZoneChangeDetection({ eventCoalescing: true }),
-    provideRouter(routes, withComponentInputBinding(), withInMemoryScrolling({ anchorScrolling: 'enabled', scrollPositionRestoration: 'enabled' }), withEnabledBlockingInitialNavigation()),
+    provideRouter(
+      routes,
+      withComponentInputBinding(),
+      withInMemoryScrolling({
+        anchorScrolling: 'enabled',
+        scrollPositionRestoration: 'enabled',
+      }),
+      withEnabledBlockingInitialNavigation()
+    ),
     provideAnimationsAsync(),
     providePrimeNG({
       theme: {
@@ -54,9 +67,9 @@ export const appConfig: ApplicationConfig = {
           darkModeSelector: '.app-dark',
           cssLayer: {
             name: 'primeng',
-            order: 'tailwind-base, primeng, tailwind-utilities'
-        }
-      }
+            order: 'tailwind-base, primeng, tailwind-utilities',
+          },
+        },
       },
     }),
     importProvidersFrom(

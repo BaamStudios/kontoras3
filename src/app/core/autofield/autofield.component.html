@@ -1,71 +1,86 @@
-<p-iftalabel class="mb-4" [ngStyle]="{ width: width }">
+<p-iftalabel *ngIf="showLabel" class="mb-4" [ngStyle]="{ width: width }">
+  <ng-container *ngTemplateOutlet="fieldContent"></ng-container>
+</p-iftalabel>
+
+<ng-container *ngIf="!showLabel">
+  <ng-container *ngTemplateOutlet="fieldContent"></ng-container>
+</ng-container>
+
+<ng-template #fieldContent>
   <div class="flex flex-col gap-1">
     <p-checkbox
       *ngIf="field.inputType === 'checkbox'"
       binary="true"
-      pSize="large"
       [(ngModel)]="entity[field.key]"
-      [name]="field.key"
-      [inputId]="field.key"
-      [attr.aria-describedby]="helperText ? field.key + '-help' : undefined"
+      [name]="key + field.key"
+      [inputId]="key + field.key"
+      [attr.aria-describedby]="
+        helperText ? key + field.key + '-help' : undefined
+      "
     ></p-checkbox>
 
     <input
       *ngIf="field.inputType === undefined"
       pInputText
-      pSize="large"
       [(ngModel)]="entity[field.key]"
-      [name]="field.key"
+      [name]="key + field.key"
       [placeholder]="placeholder"
       (blur)="onBlur($event)"
-      [id]="field.key"
-      [attr.aria-describedby]="helperText ? field.key + '-help' : undefined"
+      [id]="key + field.key"
+      [attr.aria-describedby]="
+        helperText ? key + field.key + '-help' : undefined
+      "
     />
 
     <textarea
       *ngIf="field.inputType === 'multiline'"
       pTextarea
-      pSize="large"
       [(ngModel)]="entity[field.key]"
-      [name]="field.key"
+      [name]="key + field.key"
       [rows]="rows"
       [placeholder]="placeholder"
       (blur)="onBlur($event)"
-      [id]="field.key"
-      [attr.aria-describedby]="helperText ? field.key + '-help' : undefined"
+      [id]="key + field.key"
+      [attr.aria-describedby]="
+        helperText ? key + field.key + '-help' : undefined
+      "
     ></textarea>
 
     <p-inputNumber
       *ngIf="field.inputType === 'number'"
-      pSize="large"
       [(ngModel)]="entity[field.key]"
-      [name]="field.key"
+      [name]="key + field.key"
       [placeholder]="placeholder"
       (blur)="onBlur($event)"
-      [inputId]="field.key"
-      [attr.aria-describedby]="helperText ? field.key + '-help' : undefined"
+      [inputId]="key + field.key"
+      [attr.aria-describedby]="
+        helperText ? key + field.key + '-help' : undefined
+      "
     ></p-inputNumber>
 
     <p-select
       *ngIf="field.inputType === 'select-literal'"
-      pSize="large"
       [(ngModel)]="entity[field.key]"
-      [name]="field.key"
+      [name]="key + field.key"
       [options]="getOptionValues(field.key)"
       (blur)="onBlur($event)"
-      [inputId]="field.key"
+      [inputId]="key + field.key"
       styleClass="w-full"
-      [attr.aria-describedby]="helperText ? field.key + '-help' : undefined"
+      [attr.aria-describedby]="
+        helperText ? key + field.key + '-help' : undefined
+      "
+      [appendTo]="selectPopupAppendTo"
     />
 
     <p-calendar
       *ngIf="field.inputType === 'date'"
-      pSize="large"
       [(ngModel)]="entity[field.key]"
-      [name]="field.key"
+      [name]="key + field.key"
       (blur)="onBlur($event)"
-      [inputId]="field.key"
-      [attr.aria-describedby]="helperText ? field.key + '-help' : undefined"
+      [inputId]="key + field.key"
+      [attr.aria-describedby]="
+        helperText ? key + field.key + '-help' : undefined
+      "
     ></p-calendar>
 
     <p-message
@@ -78,10 +93,12 @@
 
     <small
       *ngIf="helperText"
-      [id]="field.key + '-help'"
+      [id]="key + field.key + '-help'"
       [innerHTML]="helperText"
     ></small>
 
-    <label [for]="field.key">{{ label || field.caption }}</label>
+    <label *ngIf="showLabel" [for]="key + field.key">{{
+      label || field.caption
+    }}</label>
   </div>
-</p-iftalabel>
+</ng-template>

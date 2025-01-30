@@ -6,7 +6,7 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
 import { RippleModule } from 'primeng/ripple';
-import { AuthService } from '../../auth/auth.service';
+import { AuthService } from './auth.service';
 import {} from '@angular/common/http';
 import { ErrorService } from '../../error.service';
 
