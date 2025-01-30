@@ -1,78 +1,79 @@
 <ng-container *ngIf="entity">
-  <div cds-layout="horizontal gap:md align:left">
-    <h1>{{ 'company' | translate }}: {{ entity.displayName }}</h1>
+  <div class="flex justify-between align-items-center mb-3">
+    <h1>{{ "company" | translate }}: {{ entity.displayName }}</h1>
 
-    <div cds-layout="align:right align:vertical-center">
-      <button
-        type="button"
-        class="btn btn-icon btn-outline"
-        aria-label="delete-company"
+    <div class="flex gap-2">
+      <p-button
         [routerLink]="['/crm/overview']"
-      >
-        <cds-icon shape="view-list"></cds-icon>{{ 'overview' | translate }}
-      </button>
-      <button
-        type="button"
-        class="btn btn-icon btn-danger"
-        aria-label="delete-company"
+        icon="pi pi-list"
+        [label]="'overview' | translate"
+        severity="secondary"
+      ></p-button>
+      <p-button
         (click)="confirmDelete()"
-      >
-        <cds-icon shape="trash"></cds-icon>{{ 'deleteCustomer' | translate }}
-      </button>
-      <a
+        icon="pi pi-trash"
+        [label]="'deleteCustomer' | translate"
+        severity="danger"
+      ></p-button>
+      <p-button
         [routerLink]="['./edit']"
-        type="button"
-        class="btn btn-icon btn-primary"
-        aria-label="add-company"
-      >
-        <cds-icon shape="pencil"></cds-icon>{{ 'editCustomer' | translate }}
-      </a>
+        icon="pi pi-pencil"
+        [label]="'editCustomer' | translate"
+      ></p-button>
     </div>
   </div>
 
-  <main>
-    <table class="table table-vertical">
-      <tbody>
+  <div class="card">
+    <p-table [value]="[entity]" [tableStyle]="{ 'min-width': '50rem' }">
+      <ng-template pTemplate="body" let-entity>
         <tr *ngIf="featureFlags.companyView.showCompanyName">
-          <th>{{ 'company' | translate }}</th>
+          <th>{{ "company" | translate }}</th>
           <td>{{ entity.name }}</td>
         </tr>
         <tr *ngIf="featureFlags.companyView.showCustomerNumber">
-          <th>{{ 'customerNumber' | translate }}</th>
+          <th>{{ "customerNumber" | translate }}</th>
           <td>{{ entity.customerNumber }}</td>
         </tr>
         <tr *ngIf="featureFlags.companyView.showCreatedAt">
-          <th>{{ 'createdAt' | translate }}</th>
-          <td>{{ entity.createdAt | date: 'short' }} Uhr</td>
+          <th>{{ "createdAt" | translate }}</th>
+          <td>{{ entity.createdAt | date : "short" }} Uhr</td>
         </tr>
-      </tbody>
-    </table>
+      </ng-template>
+    </p-table>
 
     <ng-container *ngIf="featureFlags.companyView.showAddresses">
-      <app-address-view *ngFor="let address of entity.addresses" [address]="address" [entity]="entity"></app-address-view>
+      <app-address-view
+        *ngFor="let address of entity.addresses"
+        [address]="address"
+        [entity]="entity"
+      ></app-address-view>
     </ng-container>
-  </main>
+  </div>
 
-  <clr-modal
-    [(clrModalOpen)]="showConfirmDeleteModal"
-    [clrModalStaticBackdrop]="false"
+  <p-dialog
+    [(visible)]="showConfirmDeleteModal"
+    [header]="'deleteCustomer' | translate"
+    [modal]="true"
+    [style]="{ width: '450px' }"
   >
-    <h3 class="modal-title">{{ 'deleteCustomer' | translate }}</h3>
-    <div class="modal-body">
-      <b>{{ 'warning' | translate }}</b>
-      <p>{{ 'confirmDeleteCompany' | translate: { entity: entity.name } }}</p>
+    <div class="flex flex-column gap-3">
+      <p
+        [innerHTML]="
+          'confirmDeleteCompany' | translate : { entity: entity.name }
+        "
+      ></p>
     </div>
-    <div class="modal-footer">
-      <button
-        type="button"
-        class="btn btn-outline"
+    <ng-template pTemplate="footer">
+      <p-button
         (click)="showConfirmDeleteModal = false"
-      >
-        {{ 'no' | translate }}
-      </button>
-      <button type="button" class="btn btn-danger" (click)="delete()">
-        {{ 'yes' | translate }}
-      </button>
-    </div>
-  </clr-modal>
+        [label]="'no' | translate"
+        styleClass="p-button-text"
+      ></p-button>
+      <p-button
+        (click)="delete()"
+        [label]="'yes' | translate"
+        severity="danger"
+      ></p-button>
+    </ng-template>
+  </p-dialog>
 </ng-container>
