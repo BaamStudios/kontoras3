@@ -76,6 +76,10 @@ export class CompanySettings extends Base {
   @Fields.string({ caption: 'BIC' })
   bic = '';
 
+  // Neues Feld für das Firmenlogo (Base64-codiert)
+  @Fields.string({ caption: 'Firmenlogo', allowNull: true, inputType: 'image' })
+  companyLogo: string | null = null;
+
   get displayName() {
     return this.companyName;
   }

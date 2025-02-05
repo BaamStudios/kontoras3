@@ -34,6 +34,23 @@
     <app-autofield key="fax" label="Fax" [entity]="entity" [field]="fields.fax"></app-autofield>
     <app-autofield key="email" label="E-Mail-Adresse" [entity]="entity" [field]="fields.email"></app-autofield>
     <app-autofield key="website" label="Webseite" [entity]="entity" [field]="fields.website"></app-autofield>
+    <!-- Neuer Bereich für Firmenlogo -->
+    <h3>Firmenlogo</h3>
+    <p-fileUpload mode="advanced" name="logo" accept="image/*" customUpload="true" showUploadButton="false" showCancelButton="false" (onSelect)="onFileSelect($event)" chooseLabel="Logo auswählen">
+      <ng-template #empty>
+    </ng-template>
+    <ng-template #file>
+  </ng-template>
+  <ng-template #content>
+    <div *ngIf="previewUrl" class="mt-2">
+      <button type="button" pButton label="Logo entfernen" icon="pi pi-times" class="p-button-outlined p-button-danger p-button-sm mb-2"
+        (click)="entity.companyLogo = null; previewUrl = null;"></button>
+      <img [src]="previewUrl" alt="Firmenlogo-Vorschau" style="max-width: 200px; max-height: 200px;">
+    </div>
+    <div>Dateien hierher ziehen, um Bilder hochzuladen.</div>
+</ng-template>
+    </p-fileUpload>
+
     <h3>Bankverbindung</h3>
     <app-autofield key="bankName" label="Bank" [entity]="entity" [field]="fields.bankName"></app-autofield>
     <app-autofield key="iban" label="IBAN" [entity]="entity" [field]="fields.iban"></app-autofield>
