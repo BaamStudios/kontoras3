@@ -136,9 +136,9 @@ import { ErrorService } from '../../error.service';
   `,
 })
 export class Login {
-  email: string = '';
+  email: string = 'admin';
 
-  password: string = '';
+  password: string = 'geheim123';
 
   checked: boolean = false;
 
