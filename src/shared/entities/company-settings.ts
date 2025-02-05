@@ -41,7 +41,7 @@ export class CompanySettings extends Base {
     allowNull: true,
     inputType: 'select-literal',
   })
-  legalForm?: LegalForm = undefined;
+  legalForm: LegalForm | null = null;
 
   @Fields.string({ caption: 'Straße' })
   street = '';
