@@ -15,12 +15,13 @@ import { NumberRange } from '../shared/entities/number-range';
 import { bootstrap } from './bootstrap';
 import { Invoice } from '../shared/entities/invoice';
 import { InvoiceItem } from '../shared/entities/invoice-item';
+import { CompanySettings } from '../shared/entities/company-settings';
 
 export const api = remultExpress({
   dataProvider: async () =>
     new JsonDataProvider(new JsonEntityFileStorage('./data/db')),
   getUser: (req: express.Request) => (req.session as any)!['user'],
-  entities: [User, Person, Company, Address, NumberRange, Invoice, InvoiceItem],
+  entities: [User, Person, Company, Address, NumberRange, Invoice, InvoiceItem, CompanySettings],
   admin: true,
   initApi: async () => {
     console.log('initApi');

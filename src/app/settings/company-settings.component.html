@@ -1,0 +1,44 @@
+<ng-container *ngIf="entity">
+  <div class="flex justify-between align-items-center mb-3">
+    <h1>{{ 'companySettings' | translate }}</h1>
+
+    <div class="flex gap-2">
+      <p-button
+        (click)="saveChanges()"
+        [disabled]="form?.form?.invalid || hasInvalidForms()"
+        icon="pi pi-save"
+        class="whitespace-nowrap"
+        [label]="'saveChanges' | translate"
+        severity="success"
+      ></p-button>
+    </div>
+  </div>
+  <div class="card">
+    <form #form="ngForm" class="formgrid grid">
+      <h3>Stammdaten</h3>
+    <!-- Firma und Zusatz -->
+    <app-autofield key="companyName" label="Firma" [entity]="entity" [field]="fields.companyName"></app-autofield>
+    <app-autofield key="companySuffix" label="Firmenzusatz" [entity]="entity" [field]="fields.companySuffix"></app-autofield>
+    <!-- Geschäftsführer und Rechtsform -->
+    <app-autofield key="ceo" label="Geschäftsführer/-in" [entity]="entity" [field]="fields.ceo"></app-autofield>
+    <app-autofield key="legalForm" label="Rechtsform" [entity]="entity" [field]="fields.legalForm"></app-autofield>
+    <!-- Adresse -->
+    <h3>Anschrift</h3>
+    <app-autofield key="street" label="Straße" [entity]="entity" [field]="fields.street"></app-autofield>
+    <app-autofield key="postalCode" label="PLZ" [entity]="entity" [field]="fields.postalCode"></app-autofield>
+    <app-autofield key="city" label="Ort" [entity]="entity" [field]="fields.city"></app-autofield>
+    <app-autofield key="country" label="Land" [entity]="entity" [field]="fields.country"></app-autofield>
+    <!-- Kontaktdaten -->
+    <h3>Kontaktdaten</h3>
+    <app-autofield key="phone" label="Telefon" [entity]="entity" [field]="fields.phone"></app-autofield>
+    <app-autofield key="fax" label="Fax" [entity]="entity" [field]="fields.fax"></app-autofield>
+    <app-autofield key="email" label="E-Mail-Adresse" [entity]="entity" [field]="fields.email"></app-autofield>
+    <app-autofield key="website" label="Webseite" [entity]="entity" [field]="fields.website"></app-autofield>
+    <h3>Bankverbindung</h3>
+    <app-autofield key="bankName" label="Bank" [entity]="entity" [field]="fields.bankName"></app-autofield>
+    <app-autofield key="iban" label="IBAN" [entity]="entity" [field]="fields.iban"></app-autofield>
+    <app-autofield key="bic" label="BIC" [entity]="entity" [field]="fields.bic"></app-autofield>
+  </form>
+  </div>
+</ng-container>
+

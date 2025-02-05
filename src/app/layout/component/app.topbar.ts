@@ -101,6 +101,7 @@ export class AppTopbar {
       icon: 'pi pi-cog',
       items: [
         { label: 'Nummernkreise', routerLink: '/settings/number-ranges' },
+        { label: 'Firmenstammdaten', routerLink: '/settings/company-settings' },
       ],
     },
   ];

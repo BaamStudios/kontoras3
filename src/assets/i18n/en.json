@@ -77,5 +77,6 @@
   "amount": "Amount",
   "invoiceNumber": "Invoice Number",
   "subject": "Subject",
-  "removeInvoicePosition": "Delete"
+  "removeInvoicePosition": "Delete",
+  "companySettings": "Company Settings"
 }

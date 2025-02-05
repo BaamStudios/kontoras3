@@ -77,5 +77,6 @@
   "invoice": "Rechnung",
   "amount": "Betrag",
   "invoiceNumber": "Rechnungsnummer",
-  "subject": "Betreff"
+  "subject": "Betreff",
+  "companySettings": "Firmeneinstellungen"
 }
