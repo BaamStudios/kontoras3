@@ -74,7 +74,14 @@ export class AutofieldComponent {
   constructor(public form: NgForm) {}
 
   getOptionValues(field: string) {
-    return getValueList(this.field);
+    let values = getValueList(this.field).map((x) => {
+      return { label: x, value: x };
+    });
+
+    if (this.field.allowNull) {
+      values = [{ label: '⠀', value: null }, ...values];
+    }
+    return values;
   }
 
   async onBlur($event: FocusEvent) {
