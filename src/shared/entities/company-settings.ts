@@ -80,8 +80,25 @@ export class CompanySettings extends Base {
   @Fields.string({ caption: 'Firmenlogo', allowNull: true, inputType: 'image' })
   companyLogo: string | null = null;
 
+  // Neue Steuer-Felder
+  @Fields.string({ caption: 'Umsatzsteuer-ID', allowNull: true })
+  ustId: string = '';
+
+  @Fields.string({ caption: 'Steuernummer', allowNull: true })
+  taxNumber: string = '';
+
+  @Fields.string({ caption: 'Amtsgericht', allowNull: true })
+  court: string = '';
+
+  @Fields.string({ caption: 'Handelsregister-Nr', allowNull: true })
+  commercialRegisterNumber: string = '';
+
   get displayName() {
     return this.companyName;
+  }
+
+  get addressLineFormat() {
+    return `${this.companyName} ${this.companySuffix} - ${this.street} - ${this.postalCode} ${this.city}`;
   }
 }
 

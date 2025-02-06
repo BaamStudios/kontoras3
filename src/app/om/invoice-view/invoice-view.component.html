@@ -26,14 +26,14 @@
     </div>
   </div>
 
-  <p-card>
+  <!-- <p-card> -->
     <pdf-viewer
       [src]="'/api/invoice/pdf?id=' + entity.id"
       [autoresize]="false"
       [fit-to-page]="true"
       style="height: 1200px"
     ></pdf-viewer>
-  </p-card>
+  <!-- </p-card> -->
 
   <p-dialog
     [(visible)]="showConfirmDeleteModal"

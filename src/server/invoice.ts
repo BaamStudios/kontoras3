@@ -7,6 +7,7 @@ import { api } from './api';
 import { Invoice } from '../shared/entities/invoice';
 import { repo } from 'remult';
 import { InvoiceItem } from '../shared/entities/invoice-item';
+import { CompanySettings } from '../shared/entities/company-settings';
 
 export const invoice = Router();
 invoice.use(express.json());
@@ -23,7 +24,13 @@ invoice.get('/api/invoice/pdf', async (req, res) => {
     res.status(404).send('Invoice not found');
     return;
   }
-  const buffer = await renderInvoice(invoice);
+
+  const companySettings = await repo(CompanySettings).findFirst();
+  if (!companySettings) {
+    res.status(404).send('Company settings not found');
+    return;
+  }
+  const buffer = await renderInvoice(invoice, companySettings);
   res.setHeader('Content-Type', 'application/pdf');
   res.send(buffer);
 });
@@ -36,7 +43,10 @@ function formatDate(date: Date) {
   return date.toLocaleDateString();
 }
 
-export async function renderInvoice(invoice: Invoice): Promise<Buffer> {
+export async function renderInvoice(
+  invoice: Invoice,
+  companySettings: CompanySettings
+): Promise<Buffer> {
   if (!invoice?.items) {
     throw new Error('Invoice items not found');
   }
@@ -112,7 +122,7 @@ export async function renderInvoice(invoice: Invoice): Promise<Buffer> {
   var proposalHeader = function (x, r) {
     x.band([], { y: 120 });
 
-    x.band([{ data: 'Absende GbR - Hauptstr. 1 - 12345 Köln', width: 300 }], {
+    x.band([{ data: companySettings.addressLineFormat, width: 300 }], {
       x: 20,
       fontSize: 9,
     });
@@ -171,9 +181,64 @@ export async function renderInvoice(invoice: Invoice): Promise<Buffer> {
     x.print(invoice.footerText, { x: 40, addY: 20, width: 570 });
   };
 
+  // Neue Funktion zur Darstellung des Seitenfußes mit Bankdaten
+  var pageFooter = function (x) {
+    x.fontSize(8);
+    // Entferne y: 780, damit die Standard-Position genutzt wird
+
+    const bandColWidth = 135;
+    x.band(
+      [
+      { data: (companySettings.companyName || companySettings.companySuffix) ? companySettings.companyName + " " + companySettings.companySuffix : "", width: bandColWidth, align: 1 },
+      { data: companySettings.phone ? 'Tel.: ' + companySettings.phone : '', width: bandColWidth, align: 1 },
+      { data: companySettings.court ? companySettings.court : '', width: bandColWidth, align: 1 },
+      { data: companySettings.bankName ? companySettings.bankName : '', width: bandColWidth, align: 1 },
+      ],
+      { x: 10, y: 760, align: 'center' }
+    );
+    x.band(
+      [
+      { data: companySettings.street ? companySettings.street : '', width: bandColWidth, align: 1 },
+      { data: companySettings.fax ? 'Fax: ' + companySettings.fax : '', width: bandColWidth, align: 1 },
+      { data: companySettings.commercialRegisterNumber ? 'HR-Nr.: ' + companySettings.commercialRegisterNumber : '', width: bandColWidth, align: 1 },
+      { data: companySettings.iban ? 'IBAN: ' + companySettings.iban : '', width: bandColWidth, align: 1 },
+      ],
+      { x: 10, addY: 2, align: 'center' }
+    );
+    x.band(
+      [
+      { data: (companySettings.postalCode || companySettings.city) ? companySettings.postalCode + ' ' + companySettings.city : '', width: bandColWidth, align: 1 },
+      { data: companySettings.email ? companySettings.email : '', width: bandColWidth, align: 1 },
+      { data: companySettings.ustId ? 'USt.-ID: ' + companySettings.ustId : '', width: bandColWidth, align: 1 },
+      { data: companySettings.bic ? 'BIC: ' + companySettings.bic : '', width: bandColWidth, align: 1 },
+      ],
+      { x: 10, addY: 2, align: 'center' }
+    );
+    x.band(
+      [
+      { data: companySettings.country ? companySettings.country : '', width: bandColWidth, align: 1 },
+      { data: companySettings.website ? companySettings.website : '', width: bandColWidth, align: 1 },
+      { data: companySettings.taxNumber ? 'Steuer-Nr.: ' + companySettings.taxNumber : '', width: bandColWidth, align: 1 },
+      { data: '', width: bandColWidth, align: 1 },
+      ],
+      { x: 10, addY: 2, align: 'center' }
+    );
+    x.band(
+      [
+      { data: '', width: bandColWidth, align: 1 },
+      { data: '', width: bandColWidth, align: 1 },
+      { data: companySettings.ceo ? 'Geschäftsführung: ' + companySettings.ceo : '', width: bandColWidth, align: 1 },
+      { data: '', width: bandColWidth, align: 1 },
+      ],
+      { x: 10, addY: 2, align: 'center' }
+    );
+  };
+
   // To Keep fonts rendered identically on all test machines, we are setting the default
   // Font to be "Arimo" which is close to the normal default "Helvetica" font.
-  var report = new Report('buffer', { font: 'Arimo' }).data(primary_data);
+  var report = new Report('buffer', { font: 'Arimo', paper: 'A4' }).data(
+    primary_data
+  );
   report.registerFont('Arimo', {
     normal: __dirname + '/Fonts/Arimo-Regular.ttf',
     bold: __dirname + '/Fonts/Arimo-Bold.ttf',
@@ -196,6 +261,9 @@ export async function renderInvoice(invoice: Invoice): Promise<Buffer> {
     .groupBy('product.product_type')
     .sum('amount')
     .footer(tableFooter);
+
+  // Verschiebe pageFooter hierher, vor dem Render-Aufruf:
+  report.pageFooter(pageFooter);
 
   //r.printStructure();
 

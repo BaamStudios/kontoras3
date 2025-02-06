@@ -51,6 +51,13 @@
 </ng-template>
     </p-fileUpload>
 
+    <!-- Neuer Bereich: Steuer -->
+    <h3>Steuer</h3>
+    <app-autofield key="ustId" label="Umsatzsteuer-ID" [entity]="entity" [field]="fields.ustId"></app-autofield>
+    <app-autofield key="taxNumber" label="Steuernummer" [entity]="entity" [field]="fields.taxNumber"></app-autofield>
+    <app-autofield key="court" label="Amtsgericht" [entity]="entity" [field]="fields.court"></app-autofield>
+    <app-autofield key="commercialRegisterNumber" label="Handelsregister-Nr" [entity]="entity" [field]="fields.commercialRegisterNumber"></app-autofield>
+
     <h3>Bankverbindung</h3>
     <app-autofield key="bankName" label="Bank" [entity]="entity" [field]="fields.bankName"></app-autofield>
     <app-autofield key="iban" label="IBAN" [entity]="entity" [field]="fields.iban"></app-autofield>
