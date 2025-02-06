@@ -120,6 +120,11 @@ export async function renderInvoice(
   };
 
   var proposalHeader = function (x, r) {
+    // Neues Logo im oberen rechten Bereich hinzufügen
+    if (companySettings.companyLogo) {
+      x.image(companySettings.companyLogo, { x: 460, y: 30, width: 100 });
+    }
+
     x.band([], { y: 120 });
 
     x.band([{ data: companySettings.addressLineFormat, width: 300 }], {
