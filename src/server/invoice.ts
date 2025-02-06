@@ -8,6 +8,7 @@ import { Invoice } from '../shared/entities/invoice';
 import { repo } from 'remult';
 import { InvoiceItem } from '../shared/entities/invoice-item';
 import { CompanySettings } from '../shared/entities/company-settings';
+import ZUGFeRDGenerator from 'zugferd-generator';
 
 export const invoice = Router();
 invoice.use(express.json());
@@ -31,8 +32,14 @@ invoice.get('/api/invoice/pdf', async (req, res) => {
     return;
   }
   const buffer = await renderInvoice(invoice, companySettings);
+
+
+
+  const buffer2 = await attachZugferd(invoice, companySettings, buffer);
+
+
   res.setHeader('Content-Type', 'application/pdf');
-  res.send(buffer);
+  res.send(buffer2);
 });
 
 function formatCurrency(value: number) {
@@ -283,3 +290,56 @@ export async function renderInvoice(
     });
   });
 }
+async function attachZugferd(invoice: Invoice, companySettings: CompanySettings, invoicePdf: Buffer<ArrayBufferLike>) {
+  // Prepare invoiceData based on invoice and companySettings
+  const invoiceData = {
+    id: invoice.id,
+    issueDate: invoice.invoiceDate.toISOString(),
+    // dueDate optional
+    currency: 'EUR', // Annahme: feste Währung
+    totalAmount: invoice.grossTotal,
+    supplier: {
+      name: companySettings.companyName,
+      country: companySettings.country,
+      street: companySettings.street,
+      postalCode: companySettings.postalCode,
+      city: companySettings.city,
+      taxNumber: companySettings.taxNumber,
+      legalEntityID: companySettings.ustId,
+    },
+    customer: {
+      name: invoice.address.split('\n')[0] || '',
+      street: invoice.address.split('\n')[1] || '',
+      postalCode: invoice.address.split('\n')[2]?.split(' ')[0] || '',
+      city: invoice.address.split('\n')[2]?.split(' ').slice(1).join(' ') || '',
+      country: 'Deutschland', // ggf. ergänzen
+    },
+    taxTotal: {
+      taxAmount: invoice.vatTotals[0]?.total || 0,
+      taxPercentage: invoice.vatTotals[0]?.vat || 0,
+    },
+    paymentDetails: {
+      bankDetails: {
+        accountName: companySettings.companyName,
+        iban: companySettings.iban,
+        bic: companySettings.bic,
+        bankName: companySettings.bankName,
+      },
+    },
+    notes: [invoice.reference, invoice.headerText, invoice.footerText].filter(n => n),
+    lineItems: invoice.items!.map((item, index) => ({
+      id: item.id || index.toString(),
+      description: item.name,
+      quantity: item.quantity,
+      unitPrice: item.price,
+      lineTotal: item.total,
+    })),
+  };
+
+  const zugferd = new ZUGFeRDGenerator(invoiceData);
+  const xmlString = zugferd.toXMLString();
+  console.log(xmlString);
+
+  return zugferd.embedInPDF(invoicePdf);
+}
+
