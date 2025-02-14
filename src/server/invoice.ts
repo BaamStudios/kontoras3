@@ -1,14 +1,25 @@
 import * as fluentreports from 'fluentreports';
+import { PDFString } from 'pdf-lib';
 
 var Report = fluentreports.Report;
 
+import * as fontkit from '@pdf-lib/fontkit';
 import express, { Router } from 'express';
-import { api } from './api';
-import { Invoice } from '../shared/entities/invoice';
+import * as fs from 'fs';
+import * as path from 'path';
+import {
+  PDFDict,
+  PDFHexString,
+  PDFDocument as PDFLibDocument,
+  PDFName,
+} from 'pdf-lib';
 import { repo } from 'remult';
-import { InvoiceItem } from '../shared/entities/invoice-item';
-import { CompanySettings } from '../shared/entities/company-settings';
 import ZUGFeRDGenerator from 'zugferd-generator';
+import { CompanySettings } from '../shared/entities/company-settings';
+import { Invoice } from '../shared/entities/invoice';
+import { InvoiceItem } from '../shared/entities/invoice-item';
+import { api } from './api';
+import { randomBytes } from 'crypto';
 
 export const invoice = Router();
 invoice.use(express.json());
@@ -33,13 +44,12 @@ invoice.get('/api/invoice/pdf', async (req, res) => {
   }
   const buffer = await renderInvoice(invoice, companySettings);
 
+  const bufferA3 = await convertToPDFA3(buffer);
 
-
-  const buffer2 = await attachZugferd(invoice, companySettings, buffer);
-
+ // const bufferZugFERD = await attachZugferd(invoice, companySettings, bufferA3);
 
   res.setHeader('Content-Type', 'application/pdf');
-  res.send(buffer2);
+  res.send(bufferA3);
 });
 
 function formatCurrency(value: number) {
@@ -201,46 +211,126 @@ export async function renderInvoice(
     const bandColWidth = 135;
     x.band(
       [
-      { data: (companySettings.companyName || companySettings.companySuffix) ? companySettings.companyName + " " + companySettings.companySuffix : "", width: bandColWidth, align: 1 },
-      { data: companySettings.phone ? 'Tel.: ' + companySettings.phone : '', width: bandColWidth, align: 1 },
-      { data: companySettings.court ? companySettings.court : '', width: bandColWidth, align: 1 },
-      { data: companySettings.bankName ? companySettings.bankName : '', width: bandColWidth, align: 1 },
+        {
+          data:
+            companySettings.companyName || companySettings.companySuffix
+              ? companySettings.companyName +
+                ' ' +
+                companySettings.companySuffix
+              : '',
+          width: bandColWidth,
+          align: 1,
+        },
+        {
+          data: companySettings.phone ? 'Tel.: ' + companySettings.phone : '',
+          width: bandColWidth,
+          align: 1,
+        },
+        {
+          data: companySettings.court ? companySettings.court : '',
+          width: bandColWidth,
+          align: 1,
+        },
+        {
+          data: companySettings.bankName ? companySettings.bankName : '',
+          width: bandColWidth,
+          align: 1,
+        },
       ],
       { x: 10, y: 760, align: 'center' }
     );
     x.band(
       [
-      { data: companySettings.street ? companySettings.street : '', width: bandColWidth, align: 1 },
-      { data: companySettings.fax ? 'Fax: ' + companySettings.fax : '', width: bandColWidth, align: 1 },
-      { data: companySettings.commercialRegisterNumber ? 'HR-Nr.: ' + companySettings.commercialRegisterNumber : '', width: bandColWidth, align: 1 },
-      { data: companySettings.iban ? 'IBAN: ' + companySettings.iban : '', width: bandColWidth, align: 1 },
+        {
+          data: companySettings.street ? companySettings.street : '',
+          width: bandColWidth,
+          align: 1,
+        },
+        {
+          data: companySettings.fax ? 'Fax: ' + companySettings.fax : '',
+          width: bandColWidth,
+          align: 1,
+        },
+        {
+          data: companySettings.commercialRegisterNumber
+            ? 'HR-Nr.: ' + companySettings.commercialRegisterNumber
+            : '',
+          width: bandColWidth,
+          align: 1,
+        },
+        {
+          data: companySettings.iban ? 'IBAN: ' + companySettings.iban : '',
+          width: bandColWidth,
+          align: 1,
+        },
       ],
       { x: 10, addY: 2, align: 'center' }
     );
     x.band(
       [
-      { data: (companySettings.postalCode || companySettings.city) ? companySettings.postalCode + ' ' + companySettings.city : '', width: bandColWidth, align: 1 },
-      { data: companySettings.email ? companySettings.email : '', width: bandColWidth, align: 1 },
-      { data: companySettings.ustId ? 'USt.-ID: ' + companySettings.ustId : '', width: bandColWidth, align: 1 },
-      { data: companySettings.bic ? 'BIC: ' + companySettings.bic : '', width: bandColWidth, align: 1 },
+        {
+          data:
+            companySettings.postalCode || companySettings.city
+              ? companySettings.postalCode + ' ' + companySettings.city
+              : '',
+          width: bandColWidth,
+          align: 1,
+        },
+        {
+          data: companySettings.email ? companySettings.email : '',
+          width: bandColWidth,
+          align: 1,
+        },
+        {
+          data: companySettings.ustId
+            ? 'USt.-ID: ' + companySettings.ustId
+            : '',
+          width: bandColWidth,
+          align: 1,
+        },
+        {
+          data: companySettings.bic ? 'BIC: ' + companySettings.bic : '',
+          width: bandColWidth,
+          align: 1,
+        },
       ],
       { x: 10, addY: 2, align: 'center' }
     );
     x.band(
       [
-      { data: companySettings.country ? companySettings.country : '', width: bandColWidth, align: 1 },
-      { data: companySettings.website ? companySettings.website : '', width: bandColWidth, align: 1 },
-      { data: companySettings.taxNumber ? 'Steuer-Nr.: ' + companySettings.taxNumber : '', width: bandColWidth, align: 1 },
-      { data: '', width: bandColWidth, align: 1 },
+        {
+          data: companySettings.country ? companySettings.country : '',
+          width: bandColWidth,
+          align: 1,
+        },
+        {
+          data: companySettings.website ? companySettings.website : '',
+          width: bandColWidth,
+          align: 1,
+        },
+        {
+          data: companySettings.taxNumber
+            ? 'Steuer-Nr.: ' + companySettings.taxNumber
+            : '',
+          width: bandColWidth,
+          align: 1,
+        },
+        { data: '', width: bandColWidth, align: 1 },
       ],
       { x: 10, addY: 2, align: 'center' }
     );
     x.band(
       [
-      { data: '', width: bandColWidth, align: 1 },
-      { data: '', width: bandColWidth, align: 1 },
-      { data: companySettings.ceo ? 'Geschäftsführung: ' + companySettings.ceo : '', width: bandColWidth, align: 1 },
-      { data: '', width: bandColWidth, align: 1 },
+        { data: '', width: bandColWidth, align: 1 },
+        { data: '', width: bandColWidth, align: 1 },
+        {
+          data: companySettings.ceo
+            ? 'Geschäftsführung: ' + companySettings.ceo
+            : '',
+          width: bandColWidth,
+          align: 1,
+        },
+        { data: '', width: bandColWidth, align: 1 },
       ],
       { x: 10, addY: 2, align: 'center' }
     );
@@ -252,16 +342,16 @@ export async function renderInvoice(
     primary_data
   );
   report.registerFont('Arimo', {
-    normal: __dirname + '/Fonts/Arimo-Regular.ttf',
-    bold: __dirname + '/Fonts/Arimo-Bold.ttf',
-    italic: __dirname + '/Fonts/Arimo-Italic.ttf',
+    normal: __dirname + '/e-invoice/fonts/Arimo-Regular.ttf',
+    bold: __dirname + '/e-invoice/fonts/Arimo-Bold.ttf',
+    italic: __dirname + '/e-invoice/fonts/Arimo-Italic.ttf',
   });
 
   // Normally you would register a different font for each normal, bold, and italic; but for space size we are registering the same font for all three
   report.registerFont('AldotheApache', {
-    normal: __dirname + '/Fonts/AldotheApache.ttf',
-    bold: __dirname + '/Fonts/AldotheApache.ttf',
-    italic: __dirname + '/Fonts/AldotheApache.ttf',
+    normal: __dirname + '/e-invoice/fonts/AldotheApache.ttf',
+    bold: __dirname + '/e-invoice/fonts/AldotheApache.ttf',
+    italic: __dirname + '/e-invoice/fonts/AldotheApache.ttf',
   });
 
   var r = report.margins(20).detail(detail);
@@ -290,7 +380,11 @@ export async function renderInvoice(
     });
   });
 }
-async function attachZugferd(invoice: Invoice, companySettings: CompanySettings, invoicePdf: Buffer<ArrayBufferLike>) {
+async function attachZugferd(
+  invoice: Invoice,
+  companySettings: CompanySettings,
+  invoicePdf: Buffer<ArrayBufferLike>
+) {
   // Prepare invoiceData based on invoice and companySettings
   const invoiceData = {
     id: invoice.id,
@@ -326,7 +420,9 @@ async function attachZugferd(invoice: Invoice, companySettings: CompanySettings,
         bankName: companySettings.bankName,
       },
     },
-    notes: [invoice.reference, invoice.headerText, invoice.footerText].filter(n => n),
+    notes: [invoice.reference, invoice.headerText, invoice.footerText].filter(
+      (n) => n
+    ),
     lineItems: invoice.items!.map((item, index) => ({
       id: item.id || index.toString(),
       description: item.name,
@@ -343,3 +439,149 @@ async function attachZugferd(invoice: Invoice, companySettings: CompanySettings,
   return zugferd.embedInPDF(invoicePdf);
 }
 
+async function convertToPDFA3(inputBuffer: Buffer): Promise<Buffer> {
+
+  //followed this instructions: https://github.com/Hopding/pdf-lib/issues/1183#issuecomment-2593629148
+  //todo: embed fonts, results in error, but included pdf already has fonts embedded
+  //validate pdf/a-3 compliance at:
+
+  const base64Pdf = inputBuffer.toString('base64');
+
+  // Define the PDF/A-3 options
+  const options = {
+    author: 'Your Name',
+    title: 'My PDF/A-3 Document',
+  };
+
+  const doc = await PDFLibDocument.create();
+
+  const pdfDoc = await PDFLibDocument.load(inputBuffer);
+  const copiedPages = await doc.copyPages(pdfDoc, pdfDoc.getPageIndices());
+  copiedPages.forEach((page) => {
+    page.setTrimBox(0, 0, page.getWidth(), page.getHeight());
+    doc.addPage(page);
+  });
+  const documentId = randomBytes(16).toString('hex');
+  const id = PDFHexString.of(documentId);
+  doc.context.trailerInfo.ID = doc.context.obj([id, id]);
+
+  doc.registerFontkit(fontkit);
+
+  const arimoFontPaths = {
+    normal: __dirname + '/e-invoice/fonts/Arimo-Regular.ttf',
+    bold: __dirname + '/e-invoice/fonts/Arimo-Bold.ttf',
+    italic: __dirname + '/e-invoice/fonts/Arimo-Italic.ttf',
+  };
+
+  const aldotheApacheFontPaths = {
+    normal: __dirname + '/e-invoice/fonts/AldotheApache.ttf',
+    bold: __dirname + '/e-invoice/fonts/AldotheApache.ttf',
+    italic: __dirname + '/e-invoice/fonts/AldotheApache.ttf',
+  };
+
+  // await Promise.all(
+  //   [
+  //     arimoFontPaths.normal,
+  //     arimoFontPaths.italic,
+  //     arimoFontPaths.bold,
+  //     aldotheApacheFontPaths.normal,
+  //     aldotheApacheFontPaths.italic,
+  //     aldotheApacheFontPaths.bold,
+  //   ].map(async (fontPath) => {
+  //     await doc.embedFont(fs.readFileSync(path.resolve(fontPath)));
+  //   })
+  // );
+  const iccBuffer = fs.readFileSync(path.join(__dirname, 'e-invoice/sRGB2014.icc'));
+  const iccStream = doc.context.stream(iccBuffer, {
+    Length: iccBuffer.length,
+    N: 3,
+  });
+
+  const outputIntent = doc.context.obj({
+    Type: 'OutputIntent',
+    S: 'GTS_PDFA1',
+    OutputConditionIdentifier: PDFString.of('sRGB'),
+    DestOutputProfile: doc.context.register(iccStream),
+  });
+  const outputIntentRef = doc.context.register(outputIntent);
+  doc.catalog.set(
+    PDFName.of('OutputIntents'),
+    doc.context.obj([outputIntentRef])
+  );
+
+  const author = 'John Doe';
+  const producer = 'My PDF Producer';
+  const creator = 'Invoice System';
+  const title = 'Invoice Document';
+  const creationDate = new Date();
+  const modificationDate = new Date();
+
+  doc.setAuthor(author);
+  doc.setProducer(producer);
+  doc.setCreator(creator);
+  doc.setTitle(title);
+  doc.setCreationDate(creationDate);
+  doc.setModificationDate(modificationDate);
+
+  //const base64PdfA3 = await makePDFA3(base64Pdf, options);
+  const metadataXML = `
+  <?xpacket begin="" id="${documentId}"?>
+    <x:xmpmeta xmlns:x="adobe:ns:meta/" x:xmptk="Adobe XMP Core 5.2-c001 63.139439, 2010/09/27-13:37:26">
+    <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+
+      <rdf:Description rdf:about="" xmlns:dc="http://purl.org/dc/elements/1.1/">
+      <dc:format>application/pdf</dc:format>
+      <dc:creator>
+        <rdf:Seq>
+        <rdf:li>${author}</rdf:li>
+        </rdf:Seq>
+      </dc:creator>
+      <dc:title>
+         <rdf:Alt>
+          <rdf:li xml:lang="x-default">${title}</rdf:li>
+         </rdf:Alt>
+      </dc:title>
+      </rdf:Description>
+
+      <rdf:Description rdf:about="" xmlns:xmp="http://ns.adobe.com/xap/1.0/">
+      <xmp:CreatorTool>${creator}</xmp:CreatorTool>
+      <xmp:CreateDate>${creationDate.toISOString()}</xmp:CreateDate>
+      <xmp:ModifyDate>${modificationDate.toISOString()}</xmp:ModifyDate>
+      <xmp:MetadataDate>${creationDate.toISOString()}</xmp:MetadataDate>
+      </rdf:Description>
+
+      <rdf:Description rdf:about="" xmlns:pdf="http://ns.adobe.com/pdf/1.3/">
+      <pdf:Producer>${producer}</pdf:Producer>
+      </rdf:Description>
+
+      <rdf:Description rdf:about="" xmlns:pdfaid="http://www.aiim.org/pdfa/ns/id/">
+      <pdfaid:part>3</pdfaid:part>
+      <pdfaid:conformance>B</pdfaid:conformance>
+      </rdf:Description>
+    </rdf:RDF>
+    </x:xmpmeta>
+  <?xpacket end="w"?>
+  `.trim();
+
+  const metadataStream = doc.context.stream(metadataXML, {
+    Type: 'Metadata',
+    Subtype: 'XML',
+    Length: metadataXML.length,
+  });
+  const metadataStreamRef = doc.context.register(metadataStream);
+  doc.catalog.set(PDFName.of('Metadata'), metadataStreamRef);
+
+  doc.context.enumerateIndirectObjects().forEach(([ref, obj]) => {
+    if (obj instanceof PDFDict) {
+      const fontEntry = Array.from(obj.entries()).find(([key, value]) =>
+        value.toString().includes('Font')
+      );
+      if (fontEntry) {
+        obj.set(PDFName.of('CIDToGIDMap'), PDFName.of('Identity'));
+      }
+    }
+  });
+
+  const buffer = Buffer.from(await doc.save());
+  return buffer;
+}
