@@ -582,6 +582,19 @@ async function convertToPDFA3(inputBuffer: Buffer): Promise<Buffer> {
     }
   });
 
+
+  //TODO create valid zugferd xml
+  // TODO attach zugferd XML
+  // this might help for the metadata: https://apryse.com/blog/pdfa-format/how-to-create-zugferd-valid-invoices-v2
+
+  // await pdfDoc.attach(jpgAttachmentBytes, 'cat_riding_unicorn.jpg', {
+  //   mimeType: 'image/jpeg',
+  //   description: 'Cool cat riding a unicorn! 🦄🐈🕶️',
+  //   creationDate: new Date('2019/12/01'),
+  //   modificationDate: new Date('2020/04/19'),
+  // })
+
+
   const buffer = Buffer.from(await doc.save());
   return buffer;
 }
